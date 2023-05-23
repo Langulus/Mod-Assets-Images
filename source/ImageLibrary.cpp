@@ -17,21 +17,20 @@ LANGULUS_DEFINE_MODULE(
 ///   @param runtime - the runtime that owns the module                       
 ///   @param descriptor - instructions for configuring the module             
 ImageLibrary::ImageLibrary(Runtime* runtime, const Descriptor&)
-   : A::UI::Module {MetaOf<GUI>(), runtime}
-   , mSystems {this} {
+   : A::AssetModule {MetaOf<ImageLibrary>(), runtime}
+   , mImages {this} {
    Logger::Verbose(Self(), "Initializing...");
-   IMGUI_CHECKVERSION();
    Logger::Verbose(Self(), "Initialized");
 }
 
 /// Module update routine                                                     
 ///   @param dt - time from last update                                       
-void GUI::Update(Time) {
+void ImageLibrary::Update(Time) {
 
 }
 
-/// Create/Destroy GUI systems                                                
+/// Create/Destroy image assets                                               
 ///   @param verb - the creation/destruction verb                             
-void GUI::Create(Verb& verb) {
-   mSystems.Create(verb);
+void ImageLibrary::Create(Verb& verb) {
+   mImages.Create(verb);
 }

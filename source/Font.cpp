@@ -14,6 +14,6 @@
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
 Font::Font(ImageLibrary* producer, const Descriptor& descriptor)
-   : A::Texture {MetaOf<Font>(), descriptor} {
+   : A::Texture {MetaOf<Font>(), producer, descriptor} {
 
 }

@@ -21,5 +21,8 @@ public:
    Image(ImageLibrary*, const Descriptor&);
 
    void Refresh() {}
+
+   NOD() const A::Texture* GetLOD(const Math::LOD&) const;
+   NOD() void* GetGPUHandle() const noexcept;
 };
 

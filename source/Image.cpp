@@ -14,6 +14,5 @@
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
 Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
-   : A::Texture {MetaOf<Image>(), descriptor}
-   , ProducedFrom {producer, descriptor} {
+   : A::Texture {MetaOf<Image>(), producer, descriptor} {
 }
