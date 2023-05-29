@@ -22,7 +22,7 @@ public:
 
    void Refresh() {}
 
-   NOD() const A::Texture* GetLOD(const Math::LOD&) const;
+   NOD() const A::Texture* GetLOD(const LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
 };
 

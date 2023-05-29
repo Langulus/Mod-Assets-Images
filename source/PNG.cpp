@@ -224,8 +224,8 @@ bool PNG::Write(A::File& file, const A::Texture& source) {
       LANGULUS_THROW(Write, "Unknown color type");
 
    png_set_IHDR(
-      fileWriter.png_ptr, fileWriter.info_ptr, 
-      static_cast<png_uint_32>(view.mWidth), 
+      fileWriter.png_ptr, fileWriter.info_ptr,
+      static_cast<png_uint_32>(view.mWidth),
       static_cast<png_uint_32>(view.mHeight),
       8, pngFormat,
       PNG_INTERLACE_NONE,
@@ -236,14 +236,14 @@ bool PNG::Write(A::File& file, const A::Texture& source) {
    png_write_info(fileWriter.png_ptr, fileWriter.info_ptr);
 
    // Write data                                                        
-   auto rawDataPtr = rawData->GetRawAs<const uint8_t*>();
+   uint8_t* rawDataPtr = const_cast<uint8_t*>(rawData->GetRawAs<uint8_t>());
    const auto pitch = view.mWidth * view.mFormat->mSize;
-   std::vector<const uint8_t*> rows;
-   rows.reserve(view.mHeight);
+   TAny<png_byte*> rows;
+   rows.Reserve(view.mHeight);
    for (Offset i = 0; i < view.mHeight; i++)
-      rows.push_back(rawDataPtr + i * pitch);
+      rows << reinterpret_cast<png_byte*>(rawDataPtr + i * pitch);
 
-   png_write_image(fileWriter.png_ptr, rows.data());
+   png_write_image(fileWriter.png_ptr, rows.GetRaw());
    png_write_end(fileWriter.png_ptr, nullptr);
    return true;
 }

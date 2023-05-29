@@ -40,7 +40,8 @@ target_include_directories(LangulusModAssetsImages
 
 target_link_libraries(LangulusModAssetsImages 
     PRIVATE     Langulus
-                png
+                zlibstatic
+                png_static
 )
 
 if(LANGULUS_ENABLE_TESTING)
