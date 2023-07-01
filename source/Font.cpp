@@ -10,10 +10,16 @@
 #include <Math/Colors.hpp>
 
 
-/// Image construction                                                        
+/// Font descriptor-constructor                                               
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
 Font::Font(ImageLibrary* producer, const Descriptor& descriptor)
-   : A::Texture {MetaOf<Font>(), producer, descriptor} {
+   : A::Texture {MetaOf<Font>(), producer, descriptor} {}
 
+const A::Texture* Font::GetLOD(const Math::LOD&) const {
+   TODO();
+}
+
+void* Font::GetGPUHandle() const noexcept {
+   TODO();
 }
