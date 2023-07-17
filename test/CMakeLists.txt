@@ -16,3 +16,9 @@ add_test(
 )
 
 langulus_copy_dlls(LangulusModAssetsImagesTest ON LangulusModAssetsImagesTest)
+langulus_copy_dlls_advanced(LangulusModAssetsImagesTest
+	TO			LangulusModAssetsImagesTest
+	FROM		LangulusModGLFW
+				LangulusModVulkan
+				LangulusModAssetsImages
+)

@@ -56,9 +56,9 @@ struct PNGFileHelper {
 ///   @param file - [in/out] the file to load from                            
 ///   @param destination - [out] the texture to load to                       
 ///   @return true if image was loaded without any problems                   
-bool PNG::Read(A::File& file, A::Texture& destination) {
+bool PNG::Read(const A::File& file, A::Texture& destination) {
    auto loadTime = SteadyClock::now();
-   auto stream = file.NewStreamIn();
+   auto stream = const_cast<A::File&>(file).NewStreamIn();
    if (!stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
@@ -180,13 +180,13 @@ bool PNG::Read(A::File& file, A::Texture& destination) {
 ///   @param file - [in/out] the file to write to                             
 ///   @param source - the texture to save                                     
 ///   @return true if image was saved without any problems                    
-bool PNG::Write(A::File& file, const A::Texture& source) {
+bool PNG::Write(const A::File& file, const A::Texture& source) {
    auto rawData = source.GetData<Traits::Color>();
    if (!rawData || rawData->IsEmpty())
       return false;
 
    auto writeTime = SteadyClock::now();
-   auto stream = file.NewStreamOut();
+   auto stream = const_cast<A::File&>(file).NewStreamOut();
    if (!stream) {
       Logger::Error("Cannot open file: ", file);
       return false;

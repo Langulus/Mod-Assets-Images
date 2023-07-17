@@ -23,6 +23,8 @@ private:
    TFactoryUnique<Image> mImages;
    // Data folder, where images will be saved or loaded from            
    Ptr<A::Folder> mFolder;
+   // Default place to search for images, can be configured on mod load 
+   static constexpr auto DefaultTextureFolder = "Assets/Images";
 
 public:
    ImageLibrary(Runtime*, const Descriptor&);

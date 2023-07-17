@@ -24,5 +24,8 @@ public:
 
    NOD() const A::Texture* GetLOD(const LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
+
+private:
+   void LoadFile(const Any&);
 };
 

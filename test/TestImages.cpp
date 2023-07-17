@@ -30,11 +30,15 @@ SCENARIO("Image creation", "[images]") {
          // Create runtime at the root                                  
          root.CreateRuntime();
 
-         // Load ImGui module                                           
+         // Load modules                                                
+         root.LoadMod("GLFW");
+         root.LoadMod("Vulkan");
          root.LoadMod("AssetsImages");
 
-         WHEN("The system is created via tokens") {
-            TODO();
+         WHEN("The texture is created via tokens") {
+            auto producedWindow = root.CreateUnitToken("Window", Traits::Size(640, 480));
+            auto producedRenderer = root.CreateUnitToken("Renderer");
+            auto producedTexture = root.CreateUnitToken("Texture", "test.png");
 
             // Update once                                              
             root.Update(Time::zero());
@@ -42,7 +46,42 @@ SCENARIO("Image creation", "[images]") {
             THEN("Various traits change") {
                root.DumpHierarchy();
 
-               REQUIRE(true);
+               REQUIRE(producedWindow.GetCount() == 1);
+               REQUIRE(producedWindow.CastsTo<A::Window>(1));
+               REQUIRE(producedWindow.IsSparse());
+
+               REQUIRE(producedRenderer.GetCount() == 1);
+               REQUIRE(producedRenderer.CastsTo<A::Renderer>(1));
+               REQUIRE(producedRenderer.IsSparse());
+
+               REQUIRE(producedTexture.GetCount() == 1);
+               REQUIRE(producedTexture.CastsTo<A::Texture>(1));
+               REQUIRE(producedTexture.IsSparse());
+            }
+         }
+
+         WHEN("The texture is created via abstractions") {
+            auto producedWindow = root.CreateUnit<A::Window>(Traits::Size(640, 480));
+            auto producedRenderer = root.CreateUnit<A::Renderer>();
+            auto producedTexture = root.CreateUnit<A::Texture>("test.png");
+
+            // Update once                                              
+            root.Update(Time::zero());
+
+            THEN("Various traits change") {
+               root.DumpHierarchy();
+
+               REQUIRE(producedWindow.GetCount() == 1);
+               REQUIRE(producedWindow.CastsTo<A::Window>(1));
+               REQUIRE(producedWindow.IsSparse());
+
+               REQUIRE(producedRenderer.GetCount() == 1);
+               REQUIRE(producedRenderer.CastsTo<A::Renderer>(1));
+               REQUIRE(producedRenderer.IsSparse());
+
+               REQUIRE(producedTexture.GetCount() == 1);
+               REQUIRE(producedTexture.CastsTo<A::Material>(1));
+               REQUIRE(producedTexture.IsSparse());
             }
          }
 
