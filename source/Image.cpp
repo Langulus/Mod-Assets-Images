@@ -21,7 +21,7 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
    // Extract Traits::File, if any                                      
    Any file;
    mDescriptor.ExtractTrait<Traits::File>(file);
-   if (!file.IsEmpty())
+   if (file)
       LoadFile(file);
    
    // Consider all provided file constructs                             

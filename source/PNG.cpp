@@ -182,7 +182,7 @@ bool PNG::Read(const A::File& file, A::Texture& destination) {
 ///   @return true if image was saved without any problems                    
 bool PNG::Write(const A::File& file, const A::Texture& source) {
    auto rawData = source.GetData<Traits::Color>();
-   if (!rawData || rawData->IsEmpty())
+   if (!rawData || !*rawData)
       return false;
 
    auto writeTime = SteadyClock::now();
