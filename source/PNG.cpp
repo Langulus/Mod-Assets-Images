@@ -35,7 +35,7 @@ struct PNGFileHelper {
       if (!io_ptr)
          return;
 
-      auto inputStream = static_cast<A::File::StreamIn*>(io_ptr);
+      auto inputStream = static_cast<A::File::Reader*>(io_ptr);
       auto outputBlock = Block::From(outBytes, byteCountToRead);
       inputStream->Read(outputBlock);
    }
@@ -46,7 +46,7 @@ struct PNGFileHelper {
       if (!io_ptr)
          return;
 
-      auto outputStream = static_cast<A::File::StreamOut*>(io_ptr);
+      auto outputStream = static_cast<A::File::Writer*>(io_ptr);
       auto inputBlock = Block::From(inBytes, byteCountToWrite);
       outputStream->Write(inputBlock);
    }
@@ -58,7 +58,7 @@ struct PNGFileHelper {
 ///   @return true if image was loaded without any problems                   
 bool PNG::Read(const A::File& file, A::Texture& destination) {
    auto loadTime = SteadyClock::now();
-   auto stream = const_cast<A::File&>(file).NewStreamIn();
+   auto stream = const_cast<A::File&>(file).NewReader();
    if (!stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
@@ -186,7 +186,7 @@ bool PNG::Write(const A::File& file, const A::Texture& source) {
       return false;
 
    auto writeTime = SteadyClock::now();
-   auto stream = const_cast<A::File&>(file).NewStreamOut();
+   auto stream = const_cast<A::File&>(file).NewWriter(false);
    if (!stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
