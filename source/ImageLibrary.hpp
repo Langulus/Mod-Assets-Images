@@ -24,7 +24,7 @@ private:
    // Data folder, where images will be saved or loaded from            
    Ptr<A::Folder> mFolder;
    // Default place to search for images, can be configured on mod load 
-   static constexpr auto DefaultTextureFolder = "Assets/Images";
+   static constexpr auto DefaultTextureFolder = "assets/images";
 
 public:
    ImageLibrary(Runtime*, const Descriptor&);

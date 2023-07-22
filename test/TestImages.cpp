@@ -33,6 +33,7 @@ SCENARIO("Image creation", "[images]") {
          // Load modules                                                
          root.LoadMod("GLFW");
          root.LoadMod("Vulkan");
+         root.LoadMod("FileSystem");
          root.LoadMod("AssetsImages");
 
          WHEN("The texture is created via tokens") {
@@ -80,7 +81,7 @@ SCENARIO("Image creation", "[images]") {
                REQUIRE(producedRenderer.IsSparse());
 
                REQUIRE(producedTexture.GetCount() == 1);
-               REQUIRE(producedTexture.CastsTo<A::Material>(1));
+               REQUIRE(producedTexture.CastsTo<A::Texture>(1));
                REQUIRE(producedTexture.IsSparse());
             }
          }
