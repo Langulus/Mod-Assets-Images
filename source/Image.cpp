@@ -18,21 +18,27 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
    : A::Texture {MetaOf<Image>(), producer, descriptor} {
    VERBOSE_IMAGES("Initializing...");
    
-   // Extract Traits::File, if any                                      
-   Any file;
-   mDescriptor.ExtractTrait<Traits::File>(file);
-   if (file)
-      LoadFile(file);
-   
-   // Consider all provided file constructs                             
-   auto fileConstructs = mDescriptor.GetConstructs<A::File>();
-   if (fileConstructs) {
-      for (const auto& construct : *fileConstructs)
-         LoadFile(construct);
+   // Parse the descriptor for a filename                               
+   Path filename;
+   descriptor.ForEachDeep(
+      [&](const Text& text) {
+         filename = text;
+      },
+      [&](const Trait& trait) {
+         if (trait.TraitIs<Traits::Name, Traits::Path>())
+            filename = trait.template AsCast<Text>();
+      }
+   );
+
+   if (filename) {
+      // Load a filename if such was provided                           
+      auto fileInterface = producer->GetFolder()->GetFile(filename);
+      if (fileInterface)
+         PNG::Read(*fileInterface, *this);
    }
    
    // Consider all provided data                                        
-   auto colorData = mDescriptor.GetData<A::Color>();
+   auto colorData = mDescriptor.template GetData<A::Color>();
    if (colorData) {
       // Create texture from raw colors                                 
       TODO();

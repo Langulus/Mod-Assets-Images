@@ -39,11 +39,11 @@ SCENARIO("Image creation", "[images]") {
          WHEN("The texture is created via tokens") {
             auto producedWindow = root.CreateUnitToken("Window", Traits::Size(640, 480));
             auto producedRenderer = root.CreateUnitToken("Renderer");
-            auto producedTexture = root.CreateUnitToken("Texture", "test.png");
+            auto producedTexture = root.CreateUnitToken("Texture", "pattern.png");
 
             // Update once                                              
             root.Update(Time::zero());
-
+            
             THEN("Various traits change") {
                root.DumpHierarchy();
 
@@ -64,7 +64,7 @@ SCENARIO("Image creation", "[images]") {
          WHEN("The texture is created via abstractions") {
             auto producedWindow = root.CreateUnit<A::Window>(Traits::Size(640, 480));
             auto producedRenderer = root.CreateUnit<A::Renderer>();
-            auto producedTexture = root.CreateUnit<A::Texture>("test.png");
+            auto producedTexture = root.CreateUnit<A::Texture>("pattern.png");
 
             // Update once                                              
             root.Update(Time::zero());

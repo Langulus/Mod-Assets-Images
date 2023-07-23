@@ -23,13 +23,12 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Descriptor&)
    // Extract image folder, if any                                      
    //TODO configure mFolder from descriptor
 
-   if (!mFolder) {
-      mFolder = GetRuntime()->GetFolder(DefaultTextureFolder);
-      LANGULUS_ASSERT(mFolder, Image,
-         "Image asset library folder `", DefaultTextureFolder,
-         "` doesn't exist"
-      );
-   }
+   mImageFolder = "assets/images";// Path {"assets"} / "images";
+   mFolder = GetRuntime()->GetFolder(mImageFolder);
+   LANGULUS_ASSERT(mFolder && mFolder->Exists(), Image,
+      "Image asset library folder `", mImageFolder,
+      "` doesn't exist"
+   );
 
    VERBOSE_IMAGES("Initialized");
 }
@@ -44,4 +43,8 @@ void ImageLibrary::Update(Time) {
 ///   @param verb - the creation/destruction verb                             
 void ImageLibrary::Create(Verb& verb) {
    mImages.Create(verb);
+}
+
+const A::Folder* ImageLibrary::GetFolder() const noexcept {
+   return mFolder;
 }

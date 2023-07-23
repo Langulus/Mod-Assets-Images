@@ -19,17 +19,19 @@ struct ImageLibrary final : A::AssetModule {
    LANGULUS_VERBS(Verbs::Create);
 
 private:
+   // Where images are read and written to                              
+   Path mImageFolder;
    // Image library                                                     
    TFactoryUnique<Image> mImages;
    // Data folder, where images will be saved or loaded from            
    Ptr<A::Folder> mFolder;
-   // Default place to search for images, can be configured on mod load 
-   static constexpr auto DefaultTextureFolder = "assets/images";
 
 public:
    ImageLibrary(Runtime*, const Descriptor&);
 
    void Update(Time);
    void Create(Verb&);
+
+   const A::Folder* GetFolder() const noexcept;
 };
 

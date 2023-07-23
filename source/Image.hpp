@@ -15,6 +15,7 @@
 struct Image final : A::Texture {
    LANGULUS(ABSTRACT) false;
    LANGULUS(PRODUCER) ImageLibrary;
+   LANGULUS(FILES) "png";
    LANGULUS_BASES(A::Texture);
 
 public:
