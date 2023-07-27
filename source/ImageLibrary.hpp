@@ -24,7 +24,7 @@ private:
    // Image library                                                     
    TFactoryUnique<Image> mImages;
    // Data folder, where images will be saved or loaded from            
-   Ptr<A::Folder> mFolder;
+   Ref<A::Folder> mFolder;
 
 public:
    ImageLibrary(Runtime*, const Descriptor&);

@@ -25,7 +25,7 @@ SCENARIO("Image creation", "[images]") {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
-         root.SetName("ROOT"_text);
+         root.SetName("ROOT");
 
          // Create runtime at the root                                  
          root.CreateRuntime();
