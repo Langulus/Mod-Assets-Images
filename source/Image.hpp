@@ -12,18 +12,20 @@
 ///                                                                           
 ///   Image asset                                                             
 ///                                                                           
-struct Image final : A::Texture {
+struct Image final : A::Image {
    LANGULUS(ABSTRACT) false;
    LANGULUS(PRODUCER) ImageLibrary;
    LANGULUS(FILES) "png";
-   LANGULUS_BASES(A::Texture);
+   LANGULUS_BASES(A::Image);
 
 public:
    Image(ImageLibrary*, const Descriptor&);
 
    void Refresh() {}
 
-   NOD() const A::Texture* GetLOD(const LOD&) const;
+   void Upload(const Any&);
+   void Upload(Any&&);
+   NOD() Ref<A::Image> GetLOD(const LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
 
 private:

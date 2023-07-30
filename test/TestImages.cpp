@@ -44,13 +44,13 @@ SCENARIO("Image creation", "[images]") {
                root.DumpHierarchy();
 
                REQUIRE(producedTexture.GetCount() == 1);
-               REQUIRE(producedTexture.CastsTo<A::Texture>(1));
+               REQUIRE(producedTexture.CastsTo<A::Image>(1));
                REQUIRE(producedTexture.IsSparse());
             }
          }
 
          WHEN("The texture is created via abstractions") {
-            auto producedTexture = root.CreateUnit<A::Texture>("pattern.png");
+            auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
 
             // Update once                                              
             root.Update(Time::zero());
@@ -59,7 +59,7 @@ SCENARIO("Image creation", "[images]") {
                root.DumpHierarchy();
 
                REQUIRE(producedTexture.GetCount() == 1);
-               REQUIRE(producedTexture.CastsTo<A::Texture>(1));
+               REQUIRE(producedTexture.CastsTo<A::Image>(1));
                REQUIRE(producedTexture.IsSparse());
             }
          }

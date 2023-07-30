@@ -23,12 +23,19 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Descriptor&)
    // Extract image folder, if any                                      
    //TODO configure mFolder from descriptor
 
-   mImageFolder = Path {"assets"} / "images";
-   mFolder = GetRuntime()->GetFolder(mImageFolder);
-   LANGULUS_ASSERT(mFolder && mFolder->Exists(), Image,
-      "Image asset library folder `", mImageFolder,
-      "` doesn't exist"
-   );
+   try {
+      mImageFolder = Path {"assets"} / "images";
+      mFolder = GetRuntime()->GetFolder(mImageFolder);
+   }
+   catch(...) {
+      Logger::Warning(Self(), 
+         "Can't access image asset library folder `", mImageFolder,
+         "` - either folder is missing, or there's probably "
+         "no file system module available. "
+         "Image reading/writing won't be available, "
+         "but you can still generate images"
+      );
+   }
 
    VERBOSE_IMAGES("Initialized");
 }

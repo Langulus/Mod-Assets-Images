@@ -22,7 +22,7 @@ private:
    // Where images are read and written to                              
    Path mImageFolder;
    // Image library                                                     
-   TFactoryUnique<Image> mImages;
+   TFactoryUnique<::Image> mImages;
    // Data folder, where images will be saved or loaded from            
    Ref<A::Folder> mFolder;
 

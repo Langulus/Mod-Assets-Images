@@ -15,7 +15,7 @@
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
 Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
-   : A::Texture {MetaOf<Image>(), producer, descriptor} {
+   : A::Image {MetaOf<::Image>(), producer, descriptor} {
    VERBOSE_IMAGES("Initializing...");
    
    // Parse the descriptor for a filename                               
@@ -36,12 +36,15 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
       if (fileInterface)
          PNG::Read(*fileInterface, *this);
    }
-   
-   // Consider all provided data                                        
-   auto colorData = mDescriptor.template GetData<A::Color>();
-   if (colorData) {
-      // Create texture from raw colors                                 
-      TODO();
+   else {
+      // Consider all provided data                                     
+      if (!mDescriptor.ExtractData(mView))
+         LANGULUS_THROW(Image, "No image view available for custom texture");
+
+      // Upload raw data if any                                         
+      Bytes rawData;
+      if (mDescriptor.ExtractData(rawData))
+         Upload(rawData);
    }
 
    VERBOSE_IMAGES("Initialized");
@@ -50,7 +53,7 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
-const A::Texture* Image::GetLOD(const LOD& lod) const {
+Ref<A::Image> Image::GetLOD(const LOD& lod) const {
    TODO();
 }
 
@@ -73,4 +76,16 @@ void Image::LoadFile(const Any& descriptor) {
             PNG::Read(*file, *this);
 		}
    );
+}
+
+/// Upload raw data to the image by cloning                                   
+///   @param the block of data                                                
+void Image::Upload(const Any&) {
+   TODO();
+}
+
+/// Upload raw data to the image by moving                                    
+///   @param the block of data                                                
+void Image::Upload(Any&&) {
+   TODO();
 }

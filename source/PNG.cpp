@@ -56,8 +56,8 @@ struct PNGFileHelper {
 ///   @param file - [in/out] the file to load from                            
 ///   @param destination - [out] the texture to load to                       
 ///   @return true if image was loaded without any problems                   
-bool PNG::Read(const A::File& file, A::Texture& destination) {
-   auto loadTime = SteadyClock::now();
+bool PNG::Read(const A::File& file, A::Image& destination) {
+   auto loadTime = SteadyClock::Now();
    auto stream = const_cast<A::File&>(file).NewReader();
    if (!stream) {
       Logger::Error("Cannot open file: ", file);
@@ -172,7 +172,7 @@ bool PNG::Read(const A::File& file, A::Texture& destination) {
    destination.template Commit<Traits::Color>(Abandon(rawData));
 
    Logger::Verbose(Logger::Green, "File ", file.GetFilePath(), 
-      " loaded in ", SteadyClock::now() - loadTime);
+      " loaded in ", SteadyClock::Now() - loadTime);
    return true;
 }
 
@@ -180,12 +180,12 @@ bool PNG::Read(const A::File& file, A::Texture& destination) {
 ///   @param file - [in/out] the file to write to                             
 ///   @param source - the texture to save                                     
 ///   @return true if image was saved without any problems                    
-bool PNG::Write(const A::File& file, const A::Texture& source) {
+bool PNG::Write(const A::File& file, const A::Image& source) {
    auto rawData = source.GetData<Traits::Color>();
    if (!rawData || !*rawData)
       return false;
 
-   auto writeTime = SteadyClock::now();
+   auto writeTime = SteadyClock::Now();
    auto stream = const_cast<A::File&>(file).NewWriter(false);
    if (!stream) {
       Logger::Error("Cannot open file: ", file);

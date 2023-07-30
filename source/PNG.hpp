@@ -14,6 +14,6 @@
 ///                                                                           
 namespace PNG
 {
-   bool Read(const A::File&, A::Texture&);
-   bool Write(const A::File&, const A::Texture&);
+   bool Read(const A::File&, A::Image&);
+   bool Write(const A::File&, const A::Image&);
 };

@@ -12,17 +12,17 @@
 ///                                                                           
 ///   Font asset                                                              
 ///                                                                           
-struct Font final : A::Texture {
+struct Font final : A::Image {
    LANGULUS(ABSTRACT) false;
    LANGULUS(PRODUCER) ImageLibrary;
-   LANGULUS_BASES(A::Texture);
+   LANGULUS_BASES(A::Image);
 
 public:
    Font(ImageLibrary*, const Descriptor&);
 
    void Refresh() {}
 
-   NOD() const A::Texture* GetLOD(const Math::LOD&) const;
+   NOD() Ref<A::Image> GetLOD(const Math::LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
 };
 
