@@ -44,7 +44,7 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
       // Upload raw data if any                                         
       Bytes rawData;
       if (mDescriptor.ExtractData(rawData))
-         Upload(rawData);
+         Upload(Copy(rawData));
    }
 
    VERBOSE_IMAGES("Initialized");
@@ -105,22 +105,4 @@ void Image::LoadFile(const Any& descriptor) {
             PNG::Read(*file, *this);
 		}
    );
-}
-
-/// Upload raw data to the image by cloning                                   
-///   @param data - the block of data                                         
-void Image::Upload(const Any& data) {
-   // Check if provided data matches the view requirements              
-   LANGULUS_ASSERT(mView.GetBytesize() == data.GetBytesize(), Image,
-      "Data is of the wrong size");
-   Commit<Traits::Color>(Clone(data));
-}
-
-/// Upload raw data to the image by moving                                    
-///   @param data - the block of data                                         
-void Image::Upload(Any&& data) {
-   // Check if provided data matches the view requirements              
-   LANGULUS_ASSERT(mView.GetBytesize() == data.GetBytesize(), Image,
-      "Data is of the wrong size");
-   Commit<Traits::Color>(Move(data));
 }

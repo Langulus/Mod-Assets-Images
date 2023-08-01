@@ -18,7 +18,5 @@ using namespace Langulus::Math;
 struct ImageLibrary;
 struct Image;
 
-LANGULUS_EXCEPTION(Image);
-
 #define VERBOSE_IMAGES(...) Logger::Verbose(Self(), __VA_ARGS__)
 #define VERBOSE_IMAGES_TAB(...) const auto tab = Logger::Verbose(Self(), __VA_ARGS__, Logger::Tabs {})

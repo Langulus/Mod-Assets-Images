@@ -26,8 +26,6 @@ public:
    void Refresh() {}
    void Compare(Verb&);
 
-   void Upload(const Any&);
-   void Upload(Any&&);
    NOD() Ref<A::Image> GetLOD(const LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
 
