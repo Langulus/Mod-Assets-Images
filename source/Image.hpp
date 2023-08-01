@@ -7,6 +7,7 @@
 ///                                                                           
 #pragma once
 #include "Common.hpp"
+#include <Flow/Verbs/Compare.hpp>
 
 
 ///                                                                           
@@ -17,11 +18,13 @@ struct Image final : A::Image {
    LANGULUS(PRODUCER) ImageLibrary;
    LANGULUS(FILES) "png";
    LANGULUS_BASES(A::Image);
+   LANGULUS_VERBS(Verbs::Compare);
 
 public:
    Image(ImageLibrary*, const Descriptor&);
 
    void Refresh() {}
+   void Compare(Verb&);
 
    void Upload(const Any&);
    void Upload(Any&&);

@@ -50,6 +50,35 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
    VERBOSE_IMAGES("Initialized");
 }
 
+/// Compare image to another image/uniform color, etc.                        
+///   @param verb - the comparison verb                                       
+void Image::Compare(Verb& verb) {
+   if (verb.CastsTo<A::Color>()) {
+      // Compare against colors                                         
+      if (verb.GetCount() == 1) {
+         // Check if texture is filled with a uniform color             
+         const auto cast = verb.AsCast<RGBA>();
+         const auto color = mView.mReverseFormat
+            ? RGBA {cast[2], cast[1], cast[0], cast[3]}
+            : cast;
+
+         const auto matches = ForEachPixel([&color](const RGBA& pixel) {
+            if (pixel == color)
+               return Flow::Continue;
+            return Flow::Break;
+         });
+
+         verb << (matches == mView.GetPixelCount()
+               ? Compared::Equal
+               : Compared::Unequal);
+      }
+   }
+   else if (verb.CastsTo<A::Image>()) {
+      // Compare against other images                                   
+      TODO();
+   }
+}
+
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
@@ -79,13 +108,19 @@ void Image::LoadFile(const Any& descriptor) {
 }
 
 /// Upload raw data to the image by cloning                                   
-///   @param the block of data                                                
-void Image::Upload(const Any&) {
-   TODO();
+///   @param data - the block of data                                         
+void Image::Upload(const Any& data) {
+   // Check if provided data matches the view requirements              
+   LANGULUS_ASSERT(mView.GetBytesize() == data.GetBytesize(), Image,
+      "Data is of the wrong size");
+   Commit<Traits::Color>(Clone(data));
 }
 
 /// Upload raw data to the image by moving                                    
-///   @param the block of data                                                
-void Image::Upload(Any&&) {
-   TODO();
+///   @param data - the block of data                                         
+void Image::Upload(Any&& data) {
+   // Check if provided data matches the view requirements              
+   LANGULUS_ASSERT(mView.GetBytesize() == data.GetBytesize(), Image,
+      "Data is of the wrong size");
+   Commit<Traits::Color>(Move(data));
 }

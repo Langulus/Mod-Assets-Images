@@ -76,7 +76,7 @@ bool PNG::Read(const A::File& file, A::Image& destination) {
 
    if (0 != png_sig_cmp(
       reinterpret_cast<const png_const_bytep>(png_header.GetRaw()), 
-      0, png_header.GetByteSize())
+      0, png_header.GetBytesize())
    ) {
       Logger::Error("File is not PNG: ", file);
       return false;
