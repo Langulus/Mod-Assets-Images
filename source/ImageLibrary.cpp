@@ -27,7 +27,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Descriptor&)
       mImageFolder = Path {"assets"} / "images";
       mFolder = GetRuntime()->GetFolder(mImageFolder);
    }
-   catch(...) {
+   catch (...) {
       Logger::Warning(Self(), 
          "Can't access image asset library folder `", mImageFolder,
          "` - either folder is missing, or there's probably "
@@ -52,6 +52,8 @@ void ImageLibrary::Create(Verb& verb) {
    mImages.Create(verb);
 }
 
+/// Get the image library folder                                              
+///   @return the folder interface                                            
 const A::Folder* ImageLibrary::GetFolder() const noexcept {
    return mFolder;
 }
