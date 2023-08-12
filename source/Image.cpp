@@ -7,7 +7,6 @@
 ///                                                                           
 #include "Image.hpp"
 #include "ImageLibrary.hpp"
-#include "PNG.hpp"
 #include <Math/Colors.hpp>
 
 
@@ -34,7 +33,7 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
       // Load a filename if such was provided                           
       auto fileInterface = producer->GetFolder()->GetFile(filename);
       if (fileInterface)
-         PNG::Read(*fileInterface, *this);
+         ReadPNG(*fileInterface);
    }
    else {
       // Consider all provided data                                     
@@ -79,6 +78,16 @@ void Image::Compare(Verb& verb) {
    }
 }
 
+/// Generate color data                                                       
+///   @param trait - the trait to generate                                    
+///   @param index - trait group to generate                                  
+///   @return true if data was generated                                      
+bool Image::Generate(TMeta trait, Offset index) {
+   if (trait->Is<Traits::Color>() && index == 0)
+      return true;
+   return false;
+}
+
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
@@ -97,12 +106,12 @@ void* Image::GetGPUHandle() const noexcept {
 void Image::LoadFile(const Any& descriptor) {
    descriptor.ForEach(
       [&](const A::File& file) {
-			PNG::Read(file, *this);
+			ReadPNG(file);
 		},
       [&](const Text& path) {
 			auto file = GetRuntime()->GetFile(path);
 			if (file)
-            PNG::Read(*file, *this);
+            ReadPNG(*file);
 		}
    );
 }

@@ -5,7 +5,7 @@
 /// Distributed under GNU General Public License v3+                          
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
-#include "PNG.hpp"
+#include "Image.hpp"
 #include <png.h>
 
 /// Intent of file                                                            
@@ -56,7 +56,7 @@ struct PNGFileHelper {
 ///   @param file - [in/out] the file to load from                            
 ///   @param destination - [out] the texture to load to                       
 ///   @return true if image was loaded without any problems                   
-bool PNG::Read(const A::File& file, A::Image& destination) {
+bool Image::ReadPNG(const A::File& file) {
    auto loadTime = SteadyClock::Now();
    auto stream = const_cast<A::File&>(file).NewReader();
    if (!stream) {
@@ -102,7 +102,7 @@ bool PNG::Read(const A::File& file, A::Image& destination) {
    }
 
    // Read file info                                                    
-   auto& view = destination.GetView();
+   auto& view = GetView();
    png_read_info(fileReader.png_ptr, fileReader.info_ptr);
    view.mWidth = png_get_image_width(fileReader.png_ptr, fileReader.info_ptr);
    view.mHeight = png_get_image_height(fileReader.png_ptr, fileReader.info_ptr);
@@ -168,8 +168,8 @@ bool PNG::Read(const A::File& file, A::Image& destination) {
       row_pointers.push_back(rawData.GetRaw() + i * pitch);
    png_read_image(fileReader.png_ptr, row_pointers.data());
 
-   // Save the resulting memory inside content descriptor               
-   destination.template Commit<Traits::Color>(Abandon(rawData));
+   // Save the contents                                                 
+   Commit<Traits::Color>(Abandon(rawData));
 
    Logger::Verbose(Logger::Green, "File ", file.GetFilePath(), 
       " loaded in ", SteadyClock::Now() - loadTime);
@@ -180,8 +180,8 @@ bool PNG::Read(const A::File& file, A::Image& destination) {
 ///   @param file - [in/out] the file to write to                             
 ///   @param source - the texture to save                                     
 ///   @return true if image was saved without any problems                    
-bool PNG::Write(const A::File& file, const A::Image& source) {
-   auto rawData = source.GetData<Traits::Color>();
+bool Image::WritePNG(const A::File& file) const {
+   auto rawData = GetData<Traits::Color>();
    if (!rawData || !*rawData)
       return false;
 
@@ -212,7 +212,7 @@ bool PNG::Write(const A::File& file, const A::Image& source) {
    png_set_write_fn(fileWriter.png_ptr, stream, fileWriter.Write, nullptr);
 
    // Pick the correct color format                                     
-   auto& view = source.GetView();
+   auto& view = GetView();
    int pngFormat;
    if (view.mFormat->IsExact<Red8>())
       pngFormat = PNG_COLOR_TYPE_GRAY;

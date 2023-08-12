@@ -26,10 +26,14 @@ public:
    void Refresh() {}
    void Compare(Verb&);
 
+   bool Generate(TMeta, Offset = 0);
+
    NOD() Ref<A::Image> GetLOD(const LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
 
 private:
    void LoadFile(const Any&);
+   bool ReadPNG(const A::File&);
+   bool WritePNG(const A::File&) const;
 };
 
