@@ -1,5 +1,3 @@
-project(LangulusModAssetsImagesTest)
-
 add_executable(LangulusModAssetsImagesTest
 	Main.cpp
 	TestImages.cpp
