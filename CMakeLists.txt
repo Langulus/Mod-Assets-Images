@@ -3,7 +3,6 @@ project(LangulusModAssetsImages
     VERSION         1.0.0
     DESCRIPTION     "Langulus plug-in module for generating and managing image assets"
     HOMEPAGE_URL    https://langulus.com
-    LANGUAGES       CXX
 )
 
 # Configure ZLIB library                                                        

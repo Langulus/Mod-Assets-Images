@@ -31,6 +31,7 @@ SCENARIO("Image creation", "[images]") {
          root.LoadMod("FileSystem");
          root.LoadMod("AssetsImages");
          
+      #if LANGULUS_FEATURE(MANAGED_REFLECTION)
          WHEN("The texture is created via tokens") {
             auto producedTexture = root.CreateUnitToken("Image", "pattern.png");
 
@@ -45,6 +46,7 @@ SCENARIO("Image creation", "[images]") {
                REQUIRE(producedTexture.IsSparse());
             }
          }
+      #endif
 
          WHEN("The texture is created via abstractions") {
             auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
