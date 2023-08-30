@@ -21,7 +21,7 @@ struct Image final : A::Image {
    LANGULUS_VERBS(Verbs::Compare);
 
 public:
-   Image(ImageLibrary*, const Descriptor&);
+   Image(ImageLibrary*, const Neat&);
 
    void Refresh() {}
    void Compare(Verb&);

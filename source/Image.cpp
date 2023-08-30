@@ -13,21 +13,14 @@
 /// Image construction                                                        
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
-Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
+Image::Image(ImageLibrary* producer, const Neat& descriptor)
    : A::Image {MetaOf<::Image>(), producer, descriptor} {
    VERBOSE_IMAGES("Initializing...");
    
-   // Parse the descriptor for a filename                               
+   // Get a path from the descriptor                                    
    Path filename;
-   descriptor.ForEachDeep(
-      [&](const Text& text) {
-         filename = text;
-      },
-      [&](const Trait& trait) {
-         if (trait.TraitIs<Traits::Name, Traits::Path>())
-            filename = trait.template AsCast<Text>();
-      }
-   );
+   if (not descriptor.ExtractTrait<Traits::Name, Traits::Path>(filename))
+      descriptor.ExtractDataAs(filename);
 
    if (filename) {
       // Load a filename if such was provided                           
@@ -37,7 +30,7 @@ Image::Image(ImageLibrary* producer, const Descriptor& descriptor)
    }
    else {
       // Consider all provided data                                     
-      if (!mDescriptor.ExtractData(mView))
+      if (not mDescriptor.ExtractData(mView))
          LANGULUS_THROW(Image, "No image view available for custom texture");
 
       // Upload raw data if any                                         
@@ -83,7 +76,7 @@ void Image::Compare(Verb& verb) {
 ///   @param index - trait group to generate                                  
 ///   @return true if data was generated                                      
 bool Image::Generate(TMeta trait, Offset index) {
-   if (trait->Is<Traits::Color>() && index == 0)
+   if (trait->Is<Traits::Color>() and index == 0)
       return true;
    return false;
 }

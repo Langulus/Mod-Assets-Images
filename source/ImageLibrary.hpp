@@ -27,7 +27,7 @@ private:
    Ref<A::Folder> mFolder;
 
 public:
-   ImageLibrary(Runtime*, const Descriptor&);
+   ImageLibrary(Runtime*, const Neat&);
 
    void Update(Time);
    void Create(Verb&);

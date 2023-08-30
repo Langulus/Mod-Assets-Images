@@ -16,7 +16,7 @@ LANGULUS_DEFINE_MODULE(
 /// Module construction                                                       
 ///   @param runtime - the runtime that owns the module                       
 ///   @param descriptor - instructions for configuring the module             
-ImageLibrary::ImageLibrary(Runtime* runtime, const Descriptor&)
+ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
    : A::AssetModule {MetaOf<ImageLibrary>(), runtime}
    , mImages {this} {
    VERBOSE_IMAGES("Initializing...");

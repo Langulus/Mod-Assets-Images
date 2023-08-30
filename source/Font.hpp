@@ -18,7 +18,7 @@ struct Font final : A::Image {
    LANGULUS_BASES(A::Image);
 
 public:
-   Font(ImageLibrary*, const Descriptor&);
+   Font(ImageLibrary*, const Neat&);
 
    void Refresh() {}
 
