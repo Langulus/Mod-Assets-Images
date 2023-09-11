@@ -48,7 +48,7 @@ target_link_libraries(LangulusModAssetsImages
                 png_static
 )
 
-if(LANGULUS_ENABLE_TESTING)
+if(LANGULUS_TESTING)
     enable_testing()
 	add_subdirectory(test)
 endif()
