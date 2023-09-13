@@ -7,7 +7,6 @@
 ///                                                                           
 #include "Font.hpp"
 #include "ImageLibrary.hpp"
-#include <Math/Colors.hpp>
 
 
 /// Font descriptor-constructor                                               

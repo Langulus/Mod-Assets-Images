@@ -7,7 +7,6 @@
 ///                                                                           
 #include "Image.hpp"
 #include "ImageLibrary.hpp"
-#include <Math/Colors.hpp>
 
 
 /// Image construction                                                        
@@ -54,11 +53,10 @@ void Image::Compare(Verb& verb) {
             ? RGBA {cast[2], cast[1], cast[0], cast[3]}
             : cast;
 
-         const auto matches = ForEachPixel([&color](const RGBA& pixel) {
-            if (pixel == color)
-               return Flow::Continue;
-            return Flow::Break;
-         });
+         const auto matches = ForEachPixel(
+            [&color](const RGBA& pixel) noexcept {
+               return pixel == color;
+            });
 
          verb << (matches == mView.GetPixelCount()
                ? Compared::Equal

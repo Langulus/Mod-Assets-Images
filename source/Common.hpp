@@ -7,7 +7,7 @@
 ///                                                                           
 #pragma once
 #include <Entity/External.hpp>
-#include <Math/Colors.hpp>
+#include <Math/Color.hpp>
 
 using namespace Langulus;
 using namespace Langulus::Flow;
