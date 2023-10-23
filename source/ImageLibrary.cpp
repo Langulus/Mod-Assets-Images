@@ -55,5 +55,5 @@ void ImageLibrary::Create(Verb& verb) {
 /// Get the image library folder                                              
 ///   @return the folder interface                                            
 const A::Folder* ImageLibrary::GetFolder() const noexcept {
-   return mFolder;
+   return *mFolder;
 }

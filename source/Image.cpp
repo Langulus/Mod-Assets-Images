@@ -54,7 +54,7 @@ void Image::Compare(Verb& verb) {
             : cast;
 
          const auto matches = ForEachPixel(
-            [&color](const RGBA& pixel) noexcept {
+            [&color](const RGBA& pixel) noexcept -> bool {
                return pixel == color;
             });
 
@@ -102,7 +102,7 @@ void Image::LoadFile(const Any& descriptor) {
       [&](const Text& path) {
 			auto file = GetRuntime()->GetFile(path);
 			if (file)
-            ReadPNG(*file);
+            ReadPNG(**file);
 		}
    );
 }
