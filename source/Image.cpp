@@ -84,6 +84,7 @@ bool Image::Generate(TMeta trait, Offset index) {
 ///   @return the level of detail image                                       
 Ref<A::Image> Image::GetLOD(const LOD& lod) const {
    TODO();
+   return {};
 }
 
 /// Returns nullptr, because this is not a GPU image                          

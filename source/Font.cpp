@@ -17,8 +17,10 @@ Font::Font(ImageLibrary* producer, const Neat& descriptor)
 
 Ref<A::Image> Font::GetLOD(const Math::LOD&) const {
    TODO();
+   return {};
 }
 
 void* Font::GetGPUHandle() const noexcept {
    TODO();
+   return {};
 }

@@ -21,7 +21,10 @@ public:
    Font(ImageLibrary*, const Neat&);
 
    void Refresh() {}
-   bool Generate(TMeta, Offset = 0) { TODO(); }
+   bool Generate(TMeta, Offset = 0) {
+      TODO();
+      return false;
+   }
 
    NOD() Ref<A::Image> GetLOD(const Math::LOD&) const;
    NOD() void* GetGPUHandle() const noexcept;
