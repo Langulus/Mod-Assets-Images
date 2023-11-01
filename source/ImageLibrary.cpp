@@ -41,12 +41,6 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
    VERBOSE_IMAGES("Initialized");
 }
 
-/// Module update routine                                                     
-///   @param dt - time from last update                                       
-void ImageLibrary::Update(Time) {
-
-}
-
 /// Create/Destroy image assets                                               
 ///   @param verb - the creation/destruction verb                             
 void ImageLibrary::Create(Verb& verb) {

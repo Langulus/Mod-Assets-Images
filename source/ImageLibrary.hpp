@@ -29,7 +29,6 @@ private:
 public:
    ImageLibrary(Runtime*, const Neat&);
 
-   void Update(Time);
    void Create(Verb&);
 
    const A::Folder* GetFolder() const noexcept;
