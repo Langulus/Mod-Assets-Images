@@ -8,7 +8,8 @@
 #include "Image.hpp"
 #include <png.h>
 
-/// Intent of file                                                            
+
+/// File intent                                                               
 enum class Intent {
    Read, Write
 };
@@ -32,7 +33,7 @@ struct PNGFileHelper {
    /// A helper callback function to read a chunk from a PNG file             
    static void Read(png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead) {
       png_voidp io_ptr = png_get_io_ptr(png_ptr);
-      if (!io_ptr)
+      if (not io_ptr)
          return;
 
       auto inputStream = static_cast<A::File::Reader*>(io_ptr);
@@ -43,7 +44,7 @@ struct PNGFileHelper {
    /// A helper callback function to write a chunk to a PNG file              
    static void Write(png_structp png_ptr, png_bytep inBytes, png_size_t byteCountToWrite) {
       png_voidp io_ptr = png_get_io_ptr(png_ptr);
-      if (!io_ptr)
+      if (not io_ptr)
          return;
 
       auto outputStream = static_cast<A::File::Writer*>(io_ptr);
@@ -59,7 +60,7 @@ struct PNGFileHelper {
 bool Image::ReadPNG(const A::File& file) {
    auto loadTime = SteadyClock::Now();
    auto stream = const_cast<A::File&>(file).NewReader();
-   if (!stream) {
+   if (not stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
    }
@@ -75,7 +76,7 @@ bool Image::ReadPNG(const A::File& file) {
    }
 
    if (0 != png_sig_cmp(
-      reinterpret_cast<const png_const_bytep>(png_header.GetRaw()), 
+      reinterpret_cast<png_const_bytep>(png_header.GetRaw()), 
       0, png_header.GetBytesize())
    ) {
       Logger::Error("File is not PNG: ", file);
@@ -88,7 +89,7 @@ bool Image::ReadPNG(const A::File& file) {
 
    PNGFileHelper<Intent::Read> fileReader;
    fileReader.png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, warning_fn);
-   if (!fileReader.png_ptr) {
+   if (not fileReader.png_ptr) {
       Logger::Error("Cannot create PNG pointer: ", file);
       return false;
    }
@@ -96,7 +97,7 @@ bool Image::ReadPNG(const A::File& file) {
    png_set_read_fn(fileReader.png_ptr, *stream, fileReader.Read);
    png_set_sig_bytes(fileReader.png_ptr, 8);
    fileReader.info_ptr = png_create_info_struct(fileReader.png_ptr);
-   if (!fileReader.info_ptr) {
+   if (not fileReader.info_ptr) {
       Logger::Error("Cannot create PNG info struct: ", file);
       return false;
    }
@@ -182,12 +183,12 @@ bool Image::ReadPNG(const A::File& file) {
 ///   @return true if image was saved without any problems                    
 bool Image::WritePNG(const A::File& file) const {
    auto rawData = GetData<Traits::Color>();
-   if (!rawData || !*rawData)
+   if (not rawData or not *rawData)
       return false;
 
-   auto writeTime = SteadyClock::Now();
+   //auto writeTime = SteadyClock::Now();
    auto stream = const_cast<A::File&>(file).NewWriter(false);
-   if (!stream) {
+   if (not stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
    }
@@ -198,13 +199,13 @@ bool Image::WritePNG(const A::File& file) const {
       nullptr, nullptr, nullptr
    );
 
-   if (!fileWriter.png_ptr) {
+   if (not fileWriter.png_ptr) {
       Logger::Error("Cannot allocate PNG write-struct for file: ", file);
       return false;
    }
 
    fileWriter.info_ptr = png_create_info_struct(fileWriter.png_ptr);
-   if (!fileWriter.info_ptr) {
+   if (not fileWriter.info_ptr) {
       Logger::Error("Cannot create PNG info-struct for file: ", file);
       return false;
    }

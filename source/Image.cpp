@@ -82,7 +82,7 @@ bool Image::Generate(TMeta trait, Offset index) {
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
-Ref<A::Image> Image::GetLOD(const LOD& lod) const {
+Ref<A::Image> Image::GetLOD(const LOD&) const {
    TODO();
    return {};
 }

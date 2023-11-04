@@ -5,28 +5,36 @@ project(LangulusModAssetsImages
     HOMEPAGE_URL    https://langulus.com
 )
 
-# Configure ZLIB library                                                        
-set(ZLIB_USE_STATIC_LIBS ON)
-set(ZLIB_BUILD_TESTS OFF)
+# Configure ZLIB library														
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(ZLIB_USE_STATIC_LIBS ON CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 
 fetch_external_module(
     zlib
     GIT_REPOSITORY  https://github.com/madler/zlib.git
-    GIT_TAG         04f42ce # master branch
-    FIND_PACKAGE_ARGS NAMES ZLIB
+    GIT_TAG         v1.2.11
 )
 include_directories(${zlib_SOURCE_DIR})
 include_directories(${zlib_BINARY_DIR})
 
 # Configure PNG library                                                         
-option(PNG_SHARED OFF)
-option(PNG_EXECUTABLES OFF)
-option(PNG_TESTS OFF)
+set(PNG_SHARED OFF CACHE BOOL "" FORCE)
+set(PNG_TOOLS OFF CACHE BOOL "" FORCE)
+set(PNG_TESTS OFF CACHE BOOL "" FORCE)
+set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
+set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR}" CACHE STRING "" FORCE)
+
+if (WIN32)
+	set(ZLIB_LIBRARY "${zlib_BINARY_DIR}/zlibstatic$<$<CONFIG:Debug>:d>.lib" CACHE STRING "" FORCE)
+else()
+	set(ZLIB_LIBRARY "${zlib_BINARY_DIR}/libz.a" CACHE STRING "" FORCE)
+endif()
 
 fetch_external_module(
     png
     GIT_REPOSITORY  https://github.com/glennrp/libpng.git
-    GIT_TAG         e519af8 # libpng16 branch
+    GIT_TAG         libpng17
 )
 
 # Build the module                                                              
@@ -44,11 +52,10 @@ target_include_directories(LangulusModAssetsImages
 
 target_link_libraries(LangulusModAssetsImages 
     PRIVATE     Langulus
-                zlibstatic
                 png_static
 )
 
 if(LANGULUS_TESTING)
     enable_testing()
-	add_subdirectory(test)
+    add_subdirectory(test)
 endif()
