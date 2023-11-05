@@ -25,11 +25,14 @@ set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
 set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
 
-if (WIN32)
-	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/zlibstatic$<$<CONFIG:Debug>:d>.lib" CACHE STRING "" FORCE)
-else()
-	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/libz.a" CACHE STRING "" FORCE)
-endif()
+#if (WIN32)
+#	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/zlibstatic$<$<CONFIG:Debug>:d>.lib" CACHE STRING "" FORCE)
+#else()
+#	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/libz.a" CACHE STRING "" FORCE)
+	set(ZLIB_LIBRARIES $<TARGET_FILE:zlibstatic> CACHE STRING "" FORCE)
+	message(STATUS "Linking with ZLIB: " $<TARGET_FILE:zlibstatic>)
+
+#endif()
 
 fetch_external_module(
     png
