@@ -23,18 +23,18 @@ set(PNG_SHARED OFF CACHE BOOL "" FORCE)
 set(PNG_TOOLS OFF CACHE BOOL "" FORCE)
 set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
-set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
+set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
 
 if (WIN32)
-	set(ZLIB_LIBRARY "${zlib_BINARY_DIR}/zlibstatic$<$<CONFIG:Debug>:d>.lib" CACHE STRING "" FORCE)
+	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/zlibstatic$<$<CONFIG:Debug>:d>.lib" CACHE STRING "" FORCE)
 else()
-	set(ZLIB_LIBRARY "${zlib_BINARY_DIR}/libz.a" CACHE STRING "" FORCE)
+	set(ZLIB_LIBRARIES "${zlib_BINARY_DIR}/libz.a" CACHE STRING "" FORCE)
 endif()
 
 fetch_external_module(
     png
     GIT_REPOSITORY  https://github.com/glennrp/libpng.git
-    GIT_TAG         libpng17
+    GIT_TAG         libpng16
 )
 
 # Build the module                                                              
