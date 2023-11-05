@@ -13,7 +13,7 @@ set(ZLIB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 fetch_external_module(
     zlib
     GIT_REPOSITORY  https://github.com/madler/zlib.git
-    GIT_TAG         v1.2.11
+    GIT_TAG         v1.3
 )
 include_directories(${zlib_SOURCE_DIR})
 include_directories(${zlib_BINARY_DIR})
