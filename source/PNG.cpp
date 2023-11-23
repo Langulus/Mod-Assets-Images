@@ -94,7 +94,7 @@ bool Image::ReadPNG(const A::File& file) {
       return false;
    }
 
-   png_set_read_fn(fileReader.png_ptr, *stream, fileReader.Read);
+   png_set_read_fn(fileReader.png_ptr, stream, fileReader.Read);
    png_set_sig_bytes(fileReader.png_ptr, 8);
    fileReader.info_ptr = png_create_info_struct(fileReader.png_ptr);
    if (not fileReader.info_ptr) {
@@ -210,7 +210,7 @@ bool Image::WritePNG(const A::File& file) const {
       return false;
    }
 
-   png_set_write_fn(fileWriter.png_ptr, *stream, fileWriter.Write, nullptr);
+   png_set_write_fn(fileWriter.png_ptr, stream, fileWriter.Write, nullptr);
 
    // Pick the correct color format                                     
    auto& view = GetView();

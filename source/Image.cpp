@@ -103,7 +103,7 @@ void Image::LoadFile(const Any& descriptor) {
       [&](const Text& path) {
 			auto file = GetRuntime()->GetFile(path);
 			if (file)
-            ReadPNG(**file);
+            ReadPNG(*file);
 		}
    );
 }
