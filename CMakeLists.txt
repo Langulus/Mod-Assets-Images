@@ -7,32 +7,22 @@ project(LangulusModAssetsImages
 
 # Configure ZLIB library														
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-set(ZLIB_USE_STATIC_LIBS ON CACHE BOOL "" FORCE)
-set(ZLIB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ZLIB_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
 
 fetch_external_module(
     zlib
-    GIT_REPOSITORY  https://github.com/madler/zlib.git
-    GIT_TAG         v1.3
+    GIT_REPOSITORY  https://github.com/Epixu/zlib.git
+    GIT_TAG         master
 )
-target_include_directories(zlib PUBLIC  
-    $<BUILD_INTERFACE:${zlib_BINARY_DIR}>  
-    $<INSTALL_INTERFACE:include>
-)
-target_include_directories(zlibstatic PUBLIC  
-    $<BUILD_INTERFACE:${zlib_BINARY_DIR}>  
-    $<INSTALL_INTERFACE:include>
-)
-
-#include_directories(${zlib_SOURCE_DIR})
-#include_directories(${zlib_BINARY_DIR})
+include_directories(${zlib_SOURCE_DIR})
+include_directories(${zlib_BINARY_DIR})
 
 # Configure PNG library                                                         
 set(PNG_SHARED OFF CACHE BOOL "" FORCE)
 set(PNG_TOOLS OFF CACHE BOOL "" FORCE)
 set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
-set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
+#set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
 set(ZLIB_LIBRARIES $<TARGET_FILE:zlibstatic> CACHE STRING "" FORCE)
 
 fetch_external_module(
