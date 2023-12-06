@@ -15,8 +15,17 @@ fetch_external_module(
     GIT_REPOSITORY  https://github.com/madler/zlib.git
     GIT_TAG         v1.3
 )
-include_directories(${zlib_SOURCE_DIR})
-include_directories(${zlib_BINARY_DIR})
+target_include_directories(zlib PUBLIC  
+    $<BUILD_INTERFACE:${zlib_BINARY_DIR}>  
+    $<INSTALL_INTERFACE:include>
+)
+target_include_directories(zlibstatic PUBLIC  
+    $<BUILD_INTERFACE:${zlib_BINARY_DIR}>  
+    $<INSTALL_INTERFACE:include>
+)
+
+#include_directories(${zlib_SOURCE_DIR})
+#include_directories(${zlib_BINARY_DIR})
 
 # Configure PNG library                                                         
 set(PNG_SHARED OFF CACHE BOOL "" FORCE)
