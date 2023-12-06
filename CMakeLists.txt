@@ -14,15 +14,13 @@ fetch_external_module(
     GIT_REPOSITORY  https://github.com/Epixu/zlib.git
     GIT_TAG         master
 )
-include_directories(${zlib_SOURCE_DIR})
-include_directories(${zlib_BINARY_DIR})
 
 # Configure PNG library                                                         
 set(PNG_SHARED OFF CACHE BOOL "" FORCE)
 set(PNG_TOOLS OFF CACHE BOOL "" FORCE)
 set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
-#set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
+set(ZLIB_INCLUDE_DIRS "${zlib_SOURCE_DIR};${zlib_BINARY_DIR}" CACHE STRING "" FORCE)
 set(ZLIB_LIBRARIES $<TARGET_FILE:zlibstatic> CACHE STRING "" FORCE)
 
 fetch_external_module(
