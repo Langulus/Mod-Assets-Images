@@ -37,7 +37,7 @@ struct PNGFileHelper {
          return;
 
       auto inputStream = static_cast<A::File::Reader*>(io_ptr);
-      auto outputBlock = Block::From(outBytes, byteCountToRead);
+      Any outputBlock = Disown(Block::From(outBytes, byteCountToRead));
       inputStream->Read(outputBlock);
    }
 
@@ -48,7 +48,7 @@ struct PNGFileHelper {
          return;
 
       auto outputStream = static_cast<A::File::Writer*>(io_ptr);
-      auto inputBlock = Block::From(inBytes, byteCountToWrite);
+      Any inputBlock = Disown(Block::From(inBytes, byteCountToWrite));
       outputStream->Write(inputBlock);
    }
 };
