@@ -17,52 +17,42 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
 }
 
 SCENARIO("Image creation", "[images]") {
-   Allocator::State memoryState;
+   static Allocator::State memoryState;
 
-   for (int repeat = 0; repeat != 10; ++repeat) {
+   for (int repeat = 0; repeat != 100; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
          root.SetName("ROOT");
-
-         // Create runtime at the root                                  
          root.CreateRuntime();
-
-         // Load modules                                                
          root.LoadMod("FileSystem");
          root.LoadMod("AssetsImages");
-         
+       
+         WHEN("The texture is created via abstractions") {
+            auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
+
+            // Update once                                              
+            root.Update(Time::zero());
+            root.DumpHierarchy();
+
+            REQUIRE(producedTexture.GetCount() == 1);
+            REQUIRE(producedTexture.CastsTo<A::Image>(1));
+            REQUIRE(producedTexture.IsSparse());
+         }
+  
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
          WHEN("The texture is created via tokens") {
             auto producedTexture = root.CreateUnitToken("Image", "pattern.png");
 
             // Update once                                              
             root.Update(Time::zero());
-            
-            THEN("Various traits change") {
-               root.DumpHierarchy();
+            root.DumpHierarchy();
 
-               REQUIRE(producedTexture.GetCount() == 1);
-               REQUIRE(producedTexture.CastsTo<A::Image>(1));
-               REQUIRE(producedTexture.IsSparse());
-            }
+            REQUIRE(producedTexture.GetCount() == 1);
+            REQUIRE(producedTexture.CastsTo<A::Image>(1));
+            REQUIRE(producedTexture.IsSparse());
          }
       #endif
-
-         WHEN("The texture is created via abstractions") {
-            auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
-
-            // Update once                                              
-            root.Update(Time::zero());
-
-            THEN("Various traits change") {
-               root.DumpHierarchy();
-
-               REQUIRE(producedTexture.GetCount() == 1);
-               REQUIRE(producedTexture.CastsTo<A::Image>(1));
-               REQUIRE(producedTexture.IsSparse());
-            }
-         }
 
          // Check for memory leaks after each cycle                     
          REQUIRE(memoryState.Assert());
