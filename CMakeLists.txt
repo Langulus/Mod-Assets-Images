@@ -35,13 +35,14 @@ fetch_external_module(
     GIT_TAG         libpng16
 )
 
-# Build the module                                                              
-add_library(LangulusModAssetsImages SHARED
-    source/ImageLibrary.cpp
-    source/Image.cpp
-    source/Font.cpp
-    source/PNG.cpp
+file(GLOB_RECURSE
+	LANGULUS_MOD_ASSETS_IMAGES_SOURCES 
+	LIST_DIRECTORIES FALSE CONFIGURE_DEPENDS
+	source/*.cpp
 )
+
+# Build the module                                                              
+add_library(LangulusModAssetsImages SHARED ${LANGULUS_MOD_ASSETS_IMAGES_SOURCES})
 
 target_include_directories(LangulusModAssetsImages
     PRIVATE     ${png_SOURCE_DIR}
