@@ -59,7 +59,7 @@ struct PNGFileHelper {
 ///   @return true if image was loaded without any problems                   
 bool Image::ReadPNG(const A::File& file) {
    auto loadTime = SteadyClock::Now();
-   auto stream = const_cast<A::File&>(file).NewReader();
+   auto stream = file.NewReader();
    if (not stream) {
       Logger::Error("Cannot open file: ", file);
       return false;
