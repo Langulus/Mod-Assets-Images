@@ -16,6 +16,36 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
    return ::std::string {Token {serialized}};
 }
 
+SCENARIO("Loading non-existent file", "[images]") {
+   static Allocator::State memoryState;
+
+   for (int repeat = 0; repeat != 10; ++repeat) {
+      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+         // Create root entity                                          
+         Thing root;
+         root.SetName("ROOT");
+         root.CreateRuntime();
+         root.LoadMod("FileSystem");
+         root.LoadMod("AssetsImages");
+
+         WHEN("The texture is created via abstractions") {
+            REQUIRE_THROWS(root.CreateUnit<A::Image>("nonexistent.png"));
+            REQUIRE(root.GetUnits().IsEmpty());
+         }
+         
+      #if LANGULUS_FEATURE(MANAGED_REFLECTION)
+         WHEN("The texture is created via tokens") {
+            REQUIRE_THROWS(root.CreateUnitToken("Image", "nonexistent.png"));
+            REQUIRE(root.GetUnits().IsEmpty());
+         }
+      #endif
+
+         // Check for memory leaks after each cycle                     
+         REQUIRE(memoryState.Assert());
+      }
+   }
+}
+
 SCENARIO("Image creation", "[images]") {
    static Allocator::State memoryState;
 
@@ -38,6 +68,7 @@ SCENARIO("Image creation", "[images]") {
             REQUIRE(producedTexture.GetCount() == 1);
             REQUIRE(producedTexture.CastsTo<A::Image>(1));
             REQUIRE(producedTexture.IsSparse());
+            REQUIRE(root.GetUnits().GetCount() == 1);
          }
   
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
@@ -51,6 +82,7 @@ SCENARIO("Image creation", "[images]") {
             REQUIRE(producedTexture.GetCount() == 1);
             REQUIRE(producedTexture.CastsTo<A::Image>(1));
             REQUIRE(producedTexture.IsSparse());
+            REQUIRE(root.GetUnits().GetCount() == 1);
          }
       #endif
 

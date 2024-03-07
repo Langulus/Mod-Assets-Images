@@ -60,10 +60,6 @@ struct PNGFileHelper {
 bool Image::ReadPNG(const A::File& file) {
    auto loadTime = SteadyClock::Now();
    auto stream = file.NewReader();
-   if (not stream) {
-      Logger::Error("Cannot open file: ", file);
-      return false;
-   }
 
    // Check if file is PNG by reading the header                        
    Bytes png_header;

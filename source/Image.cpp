@@ -38,6 +38,7 @@ Image::Image(ImageLibrary* producer, const Neat& descriptor)
          Upload(Copy(rawData));
    }
 
+   Couple(descriptor);
    VERBOSE_IMAGES("Initialized");
 }
 
