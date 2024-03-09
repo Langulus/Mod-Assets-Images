@@ -14,5 +14,5 @@ using namespace Langulus;
 struct ImageLibrary;
 struct Image;
 
-#define VERBOSE_IMAGES(...) Logger::Verbose(Self(), __VA_ARGS__)
-#define VERBOSE_IMAGES_TAB(...) const auto tab = Logger::Verbose(Self(), __VA_ARGS__, Logger::Tabs {})
+#define VERBOSE_IMAGES(...)      Logger::Verbose(Self(), __VA_ARGS__)
+#define VERBOSE_IMAGES_TAB(...)  const auto tab = Logger::Verbose(Self(), __VA_ARGS__, Logger::Tabs {})

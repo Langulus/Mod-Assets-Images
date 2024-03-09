@@ -29,12 +29,16 @@ Image::Image(ImageLibrary* producer, const Neat& descriptor)
    }
    else {
       // Consider all provided data                                     
-      if (not mDescriptor.ExtractData(mView))
-         LANGULUS_THROW(Image, "No image view available for custom texture");
+      if (not descriptor.ExtractData(mView)) {
+         LANGULUS_OOPS(Image, 
+            "No image view available for custom texture with descriptor: ",
+            descriptor
+         );
+      }
 
       // Upload raw data if any                                         
       Bytes rawData;
-      if (mDescriptor.ExtractData(rawData))
+      if (descriptor.ExtractData(rawData))
          Upload(Copy(rawData));
    }
 
@@ -44,7 +48,7 @@ Image::Image(ImageLibrary* producer, const Neat& descriptor)
 
 /// Compare image to another image/uniform color, etc.                        
 ///   @param verb - the comparison verb                                       
-void Image::Compare(Verb& verb) {
+void Image::Compare(Verb& verb) const {
    if (verb.CastsTo<A::Color>()) {
       // Compare against colors                                         
       if (verb.GetCount() == 1) {

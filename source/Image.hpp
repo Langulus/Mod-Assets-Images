@@ -24,7 +24,7 @@ public:
    Image(ImageLibrary*, const Neat&);
 
    void Refresh() {}
-   void Compare(Verb&);
+   void Compare(Verb&) const;
 
    bool Generate(TMeta, Offset = 0);
 
