@@ -7,12 +7,12 @@
 ///                                                                           
 #include "ImageLibrary.hpp"
 
-
 LANGULUS_DEFINE_MODULE(
    ImageLibrary, 9, "AssetsImages",
    "Image reading, writing, generation and modification module", "",
    ImageLibrary, Image
 )
+
 
 /// Module construction                                                       
 ///   @param runtime - the runtime that owns the module                       
