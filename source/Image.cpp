@@ -13,7 +13,8 @@
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
 Image::Image(ImageLibrary* producer, const Neat& descriptor)
-   : A::Image {MetaOf<::Image>(), producer, descriptor} {
+   : A::Image {MetaOf<::Image>(), producer, descriptor}
+   , mProducer {producer} {
    VERBOSE_IMAGES("Initializing...");
    
    // Get a path from the descriptor                                    
@@ -64,13 +65,53 @@ void Image::Compare(Verb& verb) const {
             });
 
          verb << (matches == mView.GetPixelCount()
-               ? Compared::Equal
-               : Compared::Unequal);
+            ? Compared::Equal
+            : Compared::Unequal);
       }
    }
    else if (verb.CastsTo<A::Image>()) {
       // Compare against other images                                   
+      verb << (CompareInner(verb->As<Image>())
+         ? Compared::Equal
+         : Compared::Unequal);
+   }
+   else if (verb.CastsTo<A::Text>()) {
+      // Compare against other images                                   
+      Verbs::Create rhsCreator {Construct::From<Image>(verb.GetArgument())};
+      mProducer->Create(rhsCreator);
+      verb << (CompareInner(rhsCreator->As<Image>())
+         ? Compared::Equal
+         : Compared::Unequal);
+   }
+}
+
+/// Inner pixel-by-pixel comparison                                           
+/// Accounts for inversed pixel formats                                       
+///   @param rhs - the image to compare against                               
+///   @return true if both images match exactly                               
+bool Image::CompareInner(const Image& rhs) const {
+   if (rhs.GetView() == GetView()
+   and rhs.GetView().mReverseFormat == rhs.GetView().mReverseFormat) {
+      // We can batch-compare                                           
+      return GetDataListMap() == rhs.GetDataListMap();
+   }
+   else if (rhs.GetView() == GetView()
+   and rhs.GetView().mReverseFormat == rhs.GetView().mReverseFormat) {
+      // We have to compare pixel-by-pixel, because one of the pixel    
+      // formats is flipped                                             
+      //TODO SIMD the crap out of this using shuffles
       TODO();
+      return false;
+   }
+   else if (rhs.GetView().mHeight == GetView().mHeight
+   and rhs.GetView().mWidth  == GetView().mWidth
+   and rhs.GetView().mDepth  == GetView().mDepth
+   and rhs.GetView().mFrames == GetView().mFrames) {
+      // We have to compare pixel-by-pixel, because formats differ      
+      
+      //TODO SIMD the crap out of this using shuffles
+      TODO();
+      return false;
    }
 }
 

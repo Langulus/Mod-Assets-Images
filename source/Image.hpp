@@ -32,8 +32,11 @@ public:
    NOD() void* GetGPUHandle() const noexcept;
 
 private:
+   ImageLibrary* mProducer;
+
    void LoadFile(const Any&);
    bool ReadPNG(const A::File&);
    bool WritePNG(const A::File&) const;
+   bool CompareInner(const Image&) const;
 };
 
