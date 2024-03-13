@@ -99,20 +99,34 @@ bool Image::CompareInner(const Image& rhs) const {
    and rhs.GetView().mReverseFormat == rhs.GetView().mReverseFormat) {
       // We have to compare pixel-by-pixel, because one of the pixel    
       // formats is flipped                                             
-      //TODO SIMD the crap out of this using shuffles
-      TODO();
-      return false;
+      // We have to compare pixel-by-pixel, because formats differ      
+      auto lit = begin();
+      auto rit = rhs.begin();
+      while (lit != end()) {
+         if (lit.As<RGBA>() != rit.As<RGBA>()) //TODO SIMD the crap out of this using shuffles
+            return false;
+         ++lit;
+         ++rit;
+      }
+      return true;
    }
    else if (rhs.GetView().mHeight == GetView().mHeight
    and rhs.GetView().mWidth  == GetView().mWidth
    and rhs.GetView().mDepth  == GetView().mDepth
    and rhs.GetView().mFrames == GetView().mFrames) {
       // We have to compare pixel-by-pixel, because formats differ      
-      
-      //TODO SIMD the crap out of this using shuffles
-      TODO();
-      return false;
+      auto lit = begin();
+      auto rit = rhs.begin();
+      while (lit != end()) {
+         if (lit.As<RGBA>() != rit.As<RGBA>())
+            return false;
+         ++lit;
+         ++rit;
+      }
+      return true;
    }
+
+   return false;
 }
 
 /// Generate color data                                                       
