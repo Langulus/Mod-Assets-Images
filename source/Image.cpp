@@ -7,6 +7,7 @@
 ///                                                                           
 #include "Image.hpp"
 #include "ImageLibrary.hpp"
+#include <Langulus/IO.hpp>
 
 
 /// Image construction                                                        

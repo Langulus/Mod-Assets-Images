@@ -6,10 +6,11 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #pragma once
-#include <Entity/External.hpp>
-#include <Math/Color.hpp>
+#include <Langulus.hpp>
+#include <Langulus/Image.hpp>
 
 using namespace Langulus;
+using namespace Math;
 
 struct ImageLibrary;
 struct Image;

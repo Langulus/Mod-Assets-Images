@@ -6,6 +6,8 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #include "Image.hpp"
+#include <Langulus/IO.hpp>
+#include <Flow/Time.hpp>
 #include <png.h>
 
 
