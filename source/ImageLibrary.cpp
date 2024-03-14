@@ -25,7 +25,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
    //TODO configure mFolder from descriptor
 
    try {
-      mImageFolder = Path {"assets"} / "images";
+      mImageFolder = "assets/images";
       mFolder = GetRuntime()->GetFolder(mImageFolder);
    }
    catch (...) {
@@ -34,8 +34,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
          "` - either folder is missing, or there's probably "
          "no file system module available. "
          "Image reading/writing won't be available, "
-         "but you can still generate images"
-      );
+         "but you can still generate images");
    }
 
    VERBOSE_IMAGES("Initialized");
