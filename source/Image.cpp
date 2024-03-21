@@ -12,39 +12,30 @@
 
 /// Image construction                                                        
 ///   @param producer - the image producer                                    
-///   @param descriptor - instructions for configuring the image              
-Image::Image(ImageLibrary* producer, const Neat& descriptor)
-   : A::Image {MetaOf<::Image>(), producer, descriptor}
+///   @param desc - instructions for configuring the image                    
+Image::Image(ImageLibrary* producer, const Neat& desc)
+   : A::Image {MetaOf<::Image>(), producer, desc}
    , mProducer {producer} {
    VERBOSE_IMAGES("Initializing...");
    
-   // Get a path from the descriptor                                    
-   Path filename;
-   if (not descriptor.ExtractTrait<Traits::Name, Traits::Path>(filename))
-      descriptor.ExtractDataAs(filename);
-
-   if (filename) {
-      // Load a filename if such was provided                           
-      auto fileInterface = producer->GetFolder()->RelativeFile(filename);
-      if (fileInterface)
-         ReadPNG(*fileInterface);
-   }
-   else {
-      // Consider all provided data                                     
-      if (not descriptor.ExtractData(mView)) {
-         LANGULUS_OOPS(Image, 
-            "No image view available for custom texture with descriptor: ",
-            descriptor
-         );
+   if (not FromFile(desc)) {
+      // Mesh isn't file-based, so inspect the descriptor more closely  
+      if (desc.ExtractData(mView)) {
+         // Upload raw data if any                                      
+         Bytes rawData;
+         if (desc.ExtractData(rawData))
+            Upload(Copy(rawData));
       }
-
-      // Upload raw data if any                                         
-      Bytes rawData;
-      if (descriptor.ExtractData(rawData))
-         Upload(Copy(rawData));
+      else {
+         // Configure a generator from descriptor                       
+         LANGULUS_ASSERT(FromDescriptor(desc),
+            Image, "Couldn't create image generator");
+      }
    }
 
-   Couple(descriptor);
+   // If this was reached, then mesh was successfully initialized, so   
+   // it is ready to be added to the hierarchy of Things                
+   Couple(desc);
    VERBOSE_IMAGES("Initialized");
 }
 
@@ -154,17 +145,30 @@ void* Image::GetGPUHandle() const noexcept {
    return nullptr;
 }
 
+/// Populate the image view and generator functions, by analyzing descriptor  
+///   @param desc - the descriptor to parse                                   
+bool Image::FromDescriptor(const Neat& desc) {
+   const auto primitive = desc.FindType<A::Primitive>();
+   if (not primitive)
+      return false;
+   
+   TODO();
+   return false;
+}
+
 /// Load image via filename/file interface                                    
 ///   @param descriptor - the file to load                                    
-void Image::LoadFile(const Any& descriptor) {
-   descriptor.ForEach(
-      [&](const A::File& file) {
-			ReadPNG(file);
-		},
-      [&](const Text& path) {
-			auto file = GetRuntime()->GetFile(path);
-			if (file)
-            ReadPNG(*file);
-		}
-   );
+bool Image::FromFile(const Neat& desc) {
+   Path filename;
+   if (not desc.ExtractTrait<Traits::Name, Traits::Path>(filename))
+      desc.ExtractDataAs(filename);
+
+   if (filename) {
+      // Load a filename if such was provided                           
+      auto fileInterface = GetProducer()->GetFolder()->RelativeFile(filename);
+      if (fileInterface)
+         return ReadPNG(*fileInterface);
+   }
+
+   return false;
 }

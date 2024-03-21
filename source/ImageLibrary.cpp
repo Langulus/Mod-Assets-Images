@@ -16,21 +16,21 @@ LANGULUS_DEFINE_MODULE(
 
 /// Module construction                                                       
 ///   @param runtime - the runtime that owns the module                       
-///   @param descriptor - instructions for configuring the module             
-ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
+///   @param desc - instructions for configuring the module                   
+ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
    : A::AssetModule {MetaOf<ImageLibrary>(), runtime}
    , mImages {this} {
    VERBOSE_IMAGES("Initializing...");
-   // Extract image folder, if any                                      
-   //TODO configure mFolder from descriptor
 
-   try {
-      mImageFolder = "assets/images";
-      mFolder = GetRuntime()->GetFolder(mImageFolder);
-   }
+   // Extract mesh folder, if any                                       
+   Path repo = "assets/images";
+   if (not desc.ExtractTrait<Traits::Name, Traits::Path>(repo))
+      desc.ExtractDataAs(repo);
+
+   try { mFolder = GetRuntime()->GetFolder(repo); }
    catch (...) {
       Logger::Warning(Self(), 
-         "Can't access image asset library folder `", mImageFolder,
+         "Can't access image asset library folder `", desc,
          "` - either folder is missing, or there's probably "
          "no file system module available. "
          "Image reading/writing won't be available, "
@@ -44,10 +44,4 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat&)
 ///   @param verb - the creation/destruction verb                             
 void ImageLibrary::Create(Verb& verb) {
    mImages.Create(verb);
-}
-
-/// Get the image library folder                                              
-///   @return the folder interface                                            
-const A::Folder* ImageLibrary::GetFolder() const noexcept {
-   return mFolder;
 }

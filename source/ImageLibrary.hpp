@@ -18,18 +18,12 @@ struct ImageLibrary final : A::AssetModule {
    LANGULUS_VERBS(Verbs::Create);
 
 private:
-   // Where images are read and written to                              
-   Path mImageFolder;
    // Image library                                                     
    TFactoryUnique<::Image> mImages;
-   // Data folder, where images will be saved or loaded from            
-   Ref<A::Folder> mFolder;
 
 public:
    ImageLibrary(Runtime*, const Neat&);
 
    void Create(Verb&);
-
-   const A::Folder* GetFolder() const noexcept;
 };
 
