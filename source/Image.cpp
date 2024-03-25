@@ -1,6 +1,7 @@
 ///                                                                           
 /// Langulus::Module::Assets::Images                                          
-/// Copyright(C) 2016 Dimo Markov <langulusteam@gmail.com>                    
+/// Copyright (c) 2016 Dimo Markov <team@langulus.com>                        
+/// Part of the Langulus framework, see https://langulus.com                  
 ///                                                                           
 /// Distributed under GNU General Public License v3+                          
 /// See LICENSE file, or https://www.gnu.org/licenses                         
@@ -14,7 +15,8 @@
 ///   @param producer - the image producer                                    
 ///   @param desc - instructions for configuring the image                    
 Image::Image(ImageLibrary* producer, const Neat& desc)
-   : A::Image {MetaOf<::Image>(), producer, desc}
+   : Resolvable {MetaOf<::Image>()}
+   , ProducedFrom {producer, desc}
    , mProducer {producer} {
    VERBOSE_IMAGES("Initializing...");
    
