@@ -19,7 +19,7 @@ LANGULUS_DEFINE_MODULE(
 ///   @param runtime - the runtime that owns the module                       
 ///   @param desc - instructions for configuring the module                   
 ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
-   : Resolvable {MetaOf<ImageLibrary>()}
+   : Resolvable {this}
    , Module {runtime}
    , mImages {this} {
    VERBOSE_IMAGES("Initializing...");

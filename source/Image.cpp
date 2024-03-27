@@ -15,7 +15,7 @@
 ///   @param producer - the image producer                                    
 ///   @param desc - instructions for configuring the image                    
 Image::Image(ImageLibrary* producer, const Neat& desc)
-   : Resolvable {MetaOf<::Image>()}
+   : Resolvable {this}
    , ProducedFrom {producer, desc}
    , mProducer {producer} {
    VERBOSE_IMAGES("Initializing...");
