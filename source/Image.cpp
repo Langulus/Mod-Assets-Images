@@ -85,15 +85,14 @@ void Image::Compare(Verb& verb) const {
 ///   @return true if both images match exactly                               
 bool Image::CompareInner(const Image& rhs) const {
    if (rhs.GetView() == GetView()
-   and rhs.GetView().mReverseFormat == rhs.GetView().mReverseFormat) {
+   and rhs.GetView().mReverseFormat == GetView().mReverseFormat) {
       // We can batch-compare                                           
       return GetDataListMap() == rhs.GetDataListMap();
    }
    else if (rhs.GetView() == GetView()
-   and rhs.GetView().mReverseFormat == rhs.GetView().mReverseFormat) {
+   and rhs.GetView().mReverseFormat != GetView().mReverseFormat) {
       // We have to compare pixel-by-pixel, because one of the pixel    
       // formats is flipped                                             
-      // We have to compare pixel-by-pixel, because formats differ      
       auto lit = begin();
       auto rit = rhs.begin();
       while (lit != end()) {
