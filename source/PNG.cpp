@@ -40,7 +40,7 @@ struct PNGFileHelper {
          return;
 
       auto inputStream = static_cast<A::File::Reader*>(io_ptr);
-      Many outputBlock = Disown(Block::From(outBytes, byteCountToRead));
+      Many outputBlock = Disown(MakeBlock(outBytes, byteCountToRead));
       inputStream->Read(outputBlock);
    }
 
@@ -51,7 +51,7 @@ struct PNGFileHelper {
          return;
 
       auto outputStream = static_cast<A::File::Writer*>(io_ptr);
-      Many inputBlock = Disown(Block::From(inBytes, byteCountToWrite));
+      Many inputBlock = Disown(MakeBlock(inBytes, byteCountToWrite));
       outputStream->Write(inputBlock);
    }
 };
@@ -236,12 +236,12 @@ bool Image::WritePNG(const A::File& file) const {
    png_write_info(fileWriter.png_ptr, fileWriter.info_ptr);
 
    // Write data                                                        
-   uint8_t* rawDataPtr = const_cast<uint8_t*>(rawData->GetRawAs<uint8_t>());
+   auto rawDataPtr = rawData->GetRaw<png_byte>();
    const auto pitch = view.mWidth * view.mFormat->mSize;
    TMany<png_byte*> rows;
    rows.Reserve(view.mHeight);
    for (Offset i = 0; i < view.mHeight; i++)
-      rows << reinterpret_cast<png_byte*>(rawDataPtr + i * pitch);
+      rows << const_cast<png_byte*>(rawDataPtr + i * pitch);
 
    png_write_image(fileWriter.png_ptr, rows.GetRaw());
    png_write_end(fileWriter.png_ptr, nullptr);
