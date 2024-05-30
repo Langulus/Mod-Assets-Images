@@ -16,5 +16,10 @@ using namespace Math;
 struct ImageLibrary;
 struct Image;
 
-#define VERBOSE_IMAGES(...)      Logger::Verbose(Self(), __VA_ARGS__)
-#define VERBOSE_IMAGES_TAB(...)  const auto tab = Logger::Verbose(Self(), __VA_ARGS__, Logger::Tabs {})
+#if 0
+   #define VERBOSE_IMAGES(...)      Logger::Verbose(Self(), __VA_ARGS__)
+   #define VERBOSE_IMAGES_TAB(...)  const auto tab = Logger::Verbose(Self(), __VA_ARGS__, Logger::Tabs {})
+#else
+   #define VERBOSE_IMAGES(...)      LANGULUS(NOOP)
+   #define VERBOSE_IMAGES_TAB(...)  LANGULUS(NOOP)
+#endif
