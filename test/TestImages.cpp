@@ -23,11 +23,10 @@ SCENARIO("Loading non-existent file", "[images]") {
    for (int repeat = 0; repeat != 10; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
-         Thing root;
-         root.SetName("ROOT");
-         root.CreateRuntime();
-         root.LoadMod("FileSystem");
-         root.LoadMod("AssetsImages");
+         auto root = Thing::Root<false>(
+            "FileSystem",
+            "AssetsImages"
+         );
 
          WHEN("The texture is created via abstractions") {
             REQUIRE_THROWS(root.CreateUnit<A::Image>("nonexistent.png"));
@@ -53,11 +52,10 @@ SCENARIO("Image creation", "[images]") {
    for (int repeat = 0; repeat != 10; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
-         Thing root;
-         root.SetName("ROOT");
-         root.CreateRuntime();
-         root.LoadMod("FileSystem");
-         root.LoadMod("AssetsImages");
+         auto root = Thing::Root<false>(
+            "FileSystem",
+            "AssetsImages"
+         );
        
          WHEN("The texture is created via abstractions") {
             auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
