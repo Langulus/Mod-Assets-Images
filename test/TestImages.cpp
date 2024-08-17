@@ -61,7 +61,7 @@ SCENARIO("Image creation", "[images]") {
             auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
 
             // Update once                                              
-            root.Update(Time::zero());
+            root.Update({});
             root.DumpHierarchy();
 
             REQUIRE(producedTexture.GetCount() == 1);
@@ -75,7 +75,7 @@ SCENARIO("Image creation", "[images]") {
             auto producedTexture = root.CreateUnitToken("Image", "pattern.png");
 
             // Update once                                              
-            root.Update(Time::zero());
+            root.Update({});
             root.DumpHierarchy();
 
             REQUIRE(producedTexture.GetCount() == 1);
