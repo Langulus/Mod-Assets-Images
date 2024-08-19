@@ -21,7 +21,7 @@ LANGULUS_DEFINE_MODULE(
 ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
    : Resolvable {this}
    , Module {runtime}
-   , mImages {this} {
+   /*, mImages {this}*/ {
    VERBOSE_IMAGES("Initializing...");
 
    // Extract mesh folder, if any                                       
@@ -36,7 +36,8 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
          "` - either folder is missing, or there's probably "
          "no file system module available. "
          "Image reading/writing won't be available, "
-         "but you can still generate images");
+         "but you can still generate images"
+      );
    }
 
    VERBOSE_IMAGES("Initialized");
@@ -45,5 +46,5 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
 /// Create/Destroy image assets                                               
 ///   @param verb - the creation/destruction verb                             
 void ImageLibrary::Create(Verb& verb) {
-   mImages.Create(verb);
+   mImages.Create(this, verb);
 }
