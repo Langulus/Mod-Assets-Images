@@ -20,8 +20,7 @@ LANGULUS_DEFINE_MODULE(
 ///   @param desc - instructions for configuring the module                   
 ImageLibrary::ImageLibrary(Runtime* runtime, const Neat& desc)
    : Resolvable {this}
-   , Module {runtime}
-   /*, mImages {this}*/ {
+   , Module     {runtime} {
    VERBOSE_IMAGES("Initializing...");
 
    // Extract mesh folder, if any                                       
