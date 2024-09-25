@@ -13,10 +13,10 @@
 /// Image construction                                                        
 ///   @param producer - the image producer                                    
 ///   @param desc - instructions for configuring the image                    
-Image::Image(ImageLibrary* producer, const Neat& desc)
-   : Resolvable {this}
+Image::Image(ImageLibrary* producer, Describe desc)
+   : Resolvable   {this}
    , ProducedFrom {producer, desc}
-   , mProducer {producer} {
+   , mProducer    {producer} {
    VERBOSE_IMAGES("Initializing...");
    
    if (not FromFile(desc)) {
@@ -147,7 +147,7 @@ void* Image::GetGPUHandle() const noexcept {
 
 /// Populate the image view and generator functions, by analyzing descriptor  
 ///   @param desc - the descriptor to parse                                   
-bool Image::FromDescriptor(const Neat& desc) {
+bool Image::FromDescriptor(Describe desc) {
    const auto primitive = desc.FindType<A::Primitive>();
    if (not primitive)
       return false;
@@ -158,7 +158,7 @@ bool Image::FromDescriptor(const Neat& desc) {
 
 /// Load image via filename/file interface                                    
 ///   @param descriptor - the file to load                                    
-bool Image::FromFile(const Neat& desc) {
+bool Image::FromFile(Describe desc) {
    Path filename;
    if (not desc.ExtractTrait<Traits::Name, Traits::Path>(filename))
       desc.ExtractDataAs(filename);

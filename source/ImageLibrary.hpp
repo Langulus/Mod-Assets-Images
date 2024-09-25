@@ -22,7 +22,7 @@ private:
    TFactoryUnique<::Image> mImages;
 
 public:
-   ImageLibrary(Runtime*, const Neat&);
+   ImageLibrary(Runtime*, Describe);
 
    void Create(Verb&);
 };

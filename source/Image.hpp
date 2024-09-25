@@ -21,7 +21,7 @@ struct Image final : A::Image {
    LANGULUS_VERBS(Verbs::Compare);
 
 public:
-   Image(ImageLibrary*, const Neat&);
+   Image(ImageLibrary*, Describe);
 
    void Refresh() {}
    void Compare(Verb&) const;
@@ -32,8 +32,8 @@ public:
    NOD() void* GetGPUHandle() const noexcept;
 
 private:
-   bool FromDescriptor(const Neat&);
-   bool FromFile(const Neat&);
+   bool FromDescriptor(Describe);
+   bool FromFile(Describe);
 
    ImageLibrary* mProducer;
 

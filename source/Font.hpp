@@ -18,7 +18,7 @@ struct Font final : A::Image {
    LANGULUS_BASES(A::Image);
 
 public:
-   Font(ImageLibrary*, const Neat&);
+   Font(ImageLibrary*, Describe);
 
    void Refresh() {}
    bool Generate(TMeta, Offset = 0) {

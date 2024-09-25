@@ -12,8 +12,8 @@
 /// Font descriptor-constructor                                               
 ///   @param producer - the image producer                                    
 ///   @param descriptor - instructions for configuring the image              
-Font::Font(ImageLibrary* producer, const Neat& descriptor)
-   : Resolvable {this}
+Font::Font(ImageLibrary* producer, Describe descriptor)
+   : Resolvable   {this}
    , ProducedFrom {producer, descriptor} {}
 
 Ref<A::Image> Font::GetLOD(const Math::LOD&) const {
