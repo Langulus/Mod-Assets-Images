@@ -7,7 +7,7 @@ project(LangulusModAssetsImages
 
 # Configure ZLIB library                                                        
 set(BUILD_SHARED_LIBS   OFF CACHE BOOL "" FORCE)
-set(ZLIB_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 fetch_external_module(
     zlib
@@ -39,11 +39,6 @@ file(GLOB_RECURSE
 
 # Build the module                                                              
 add_library(LangulusModAssetsImages SHARED ${LANGULUS_MOD_ASSETS_IMAGES_SOURCES})
-
-target_include_directories(LangulusModAssetsImages
-    PRIVATE     ${png_SOURCE_DIR}
-                ${png_BINARY_DIR}
-)
 
 target_link_libraries(LangulusModAssetsImages 
     PRIVATE     Langulus
