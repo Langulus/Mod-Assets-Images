@@ -22,7 +22,8 @@ private:
    TFactoryUnique<::Image> mImages;
 
 public:
-   ImageLibrary(Runtime*, const Many&);
+    ImageLibrary(Runtime*, const Many&);
+   ~ImageLibrary();
 
    void Create(Verb&);
 };

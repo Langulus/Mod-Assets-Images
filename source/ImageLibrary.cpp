@@ -41,6 +41,12 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Many& desc)
    VERBOSE_IMAGES("Initialized");
 }
 
+/// Shutdown image library                                                    
+ImageLibrary::~ImageLibrary() {
+   for (auto& asset : mImages)
+      asset.Detach();
+}
+
 /// Create/Destroy image assets                                               
 ///   @param verb - the creation/destruction verb                             
 void ImageLibrary::Create(Verb& verb) {
