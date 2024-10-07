@@ -5,24 +5,19 @@ project(LangulusModAssetsImages
     HOMEPAGE_URL    https://langulus.com
 )
 
-# Configure ZLIB library														
+# Configure ZLIB library                                                        
 set(BUILD_SHARED_LIBS   OFF CACHE BOOL "" FORCE)
 set(ZLIB_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
 
 fetch_external_module(
     zlib
-    GIT_REPOSITORY  https://github.com/Epixu/zlib.git
-    GIT_TAG         master
+    GIT_REPOSITORY  https://github.com/madler/zlib.git
+    GIT_TAG         51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf
 )
 add_library(ZLIB::ZLIB ALIAS zlibstatic)
 target_include_directories(zlibstatic INTERFACE ${zlib_BINARY_DIR} ${zlib_SOURCE_DIR})
-set(ZLIB_ROOT "${zlib_SOURCE_DIR}"
-	CACHE STRING "Root for the zlib library, used by libpng"
-)
-
-message(STATUS "ZLIB_ROOT: ${ZLIB_ROOT}")
-
-set(ZLIB_LIBRARY ZLIB::ZLIB CACHE BOOL "" FORCE)
+set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE INTERNAL "Root for the zlib library, used by libpng")
+set(ZLIB_LIBRARY zlibstatic CACHE INTERNAL "" FORCE)
 
 # Configure PNG library                                                         
 set(PNG_SHARED		 OFF CACHE BOOL "" FORCE)
