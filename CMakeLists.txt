@@ -18,6 +18,7 @@ add_library(ZLIB::ZLIB ALIAS zlibstatic)
 target_include_directories(zlibstatic INTERFACE ${zlib_BINARY_DIR} ${zlib_SOURCE_DIR})
 set(ZLIB_ROOT "${zlib_SOURCE_DIR}" CACHE INTERNAL "Root for the zlib library, used by libpng")
 set(ZLIB_LIBRARY zlibstatic CACHE INTERNAL "" FORCE)
+set(ZLIB_INCLUDE_DIR ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR} CACHE INTERNAL "" FORCE)
 
 # Configure PNG library                                                         
 set(PNG_SHARED		 OFF CACHE BOOL "" FORCE)
