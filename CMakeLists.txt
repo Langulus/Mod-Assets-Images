@@ -6,7 +6,7 @@ project(LangulusModAssetsImages
 )
 
 # Configure ZLIB library														
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS   OFF CACHE BOOL "" FORCE)
 set(ZLIB_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
 
 fetch_external_module(
@@ -14,25 +14,26 @@ fetch_external_module(
     GIT_REPOSITORY  https://github.com/Epixu/zlib.git
     GIT_TAG         master
 )
-add_library(ZLIB::ZLIB ALIAS zlibstatic)
-target_include_directories(zlibstatic INTERFACE ${zlib_BINARY_DIR} ${zlib_SOURCE_DIR})
-set(ZLIB_FOUND ON CACHE BOOL "" FORCE)
+#add_library(ZLIB::ZLIB ALIAS zlibstatic)
+
+set(ZLIB_ROOT ${zlib_SOURCE_DIR}
+	CACHE STRING "Root for the zlib library, used by libpng"
+)
+
+message(STATUS "ZLIB_ROOT: ${ZLIB_ROOT}")
+
 set(ZLIB_LIBRARY ZLIB::ZLIB CACHE BOOL "" FORCE)
-set(ZLIB_LIBRARIES ZLIB::ZLIB CACHE BOOL "" FORCE)
-set(ZLIB_INCLUDE_DIR ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR} CACHE BOOL "" FORCE)
-set(ZLIB_INCLUDE_DIRS ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR} CACHE BOOL "" FORCE)
 
 # Configure PNG library                                                         
-set(PNG_SHARED OFF CACHE BOOL "" FORCE)
-set(PNG_TOOLS OFF CACHE BOOL "" FORCE)
-set(PNG_TESTS OFF CACHE BOOL "" FORCE)
-set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
-set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
+set(PNG_SHARED		 OFF CACHE BOOL "" FORCE)
+set(PNG_TOOLS		 OFF CACHE BOOL "" FORCE)
+set(PNG_TESTS		 OFF CACHE BOOL "" FORCE)
+set(SKIP_INSTALL_ALL ON  CACHE BOOL "" FORCE)
 
 fetch_external_module(
     png
-    GIT_REPOSITORY  https://github.com/glennrp/libpng.git
-    GIT_TAG         libpng16
+    GIT_REPOSITORY   https://github.com/glennrp/libpng.git
+    GIT_TAG          1bf304c43caa94e491e4659362b1252ec50abb3e
 )
 
 file(GLOB_RECURSE
