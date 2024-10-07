@@ -14,8 +14,8 @@ fetch_external_module(
     GIT_REPOSITORY  https://github.com/Epixu/zlib.git
     GIT_TAG         master
 )
-#add_library(ZLIB::ZLIB ALIAS zlibstatic)
-
+add_library(ZLIB::ZLIB ALIAS zlibstatic)
+target_include_directories(zlibstatic INTERFACE ${zlib_BINARY_DIR} ${zlib_SOURCE_DIR})
 set(ZLIB_ROOT "${zlib_SOURCE_DIR}"
 	CACHE STRING "Root for the zlib library, used by libpng"
 )
