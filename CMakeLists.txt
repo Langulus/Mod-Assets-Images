@@ -16,7 +16,7 @@ fetch_external_module(
 )
 #add_library(ZLIB::ZLIB ALIAS zlibstatic)
 
-set(ZLIB_ROOT ${zlib_SOURCE_DIR}
+set(ZLIB_ROOT "${zlib_SOURCE_DIR}"
 	CACHE STRING "Root for the zlib library, used by libpng"
 )
 
