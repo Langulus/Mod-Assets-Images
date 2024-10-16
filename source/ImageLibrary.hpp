@@ -24,6 +24,8 @@ private:
 public:
    ImageLibrary(Runtime*, const Many&);
 
+   void RequestGarbageCollection() {}
+
    void Create(Verb&);
 };
 
