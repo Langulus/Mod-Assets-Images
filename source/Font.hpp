@@ -26,7 +26,7 @@ public:
       return false;
    }
 
-   NOD() Ref<A::Image> GetLOD(const Math::LOD&) const;
-   NOD() void* GetGPUHandle() const noexcept;
+   NOD() auto GetLOD(const Math::LOD&) const -> Ref<A::Image>;
+   NOD() auto GetGPUHandle() const noexcept -> void*;
 };
 

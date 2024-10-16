@@ -20,25 +20,23 @@ struct Image final : A::Image {
    LANGULUS_BASES(A::Image);
    LANGULUS_VERBS(Verbs::Compare);
 
+private:
+   ImageLibrary* mProducer;
+
+   bool FromDescriptor(const Many&);
+   bool FromFile(const Many&);
+   bool ReadPNG(const A::File&);
+   bool WritePNG(const A::File&) const;
+   bool CompareInner(const Image&) const;
+
 public:
    Image(ImageLibrary*, const Many&);
 
    void Refresh() {}
    void Compare(Verb&) const;
-
    bool Generate(TMeta, Offset = 0);
 
-   NOD() Ref<A::Image> GetLOD(const LOD&) const;
-   NOD() void* GetGPUHandle() const noexcept;
-
-private:
-   bool FromDescriptor(const Many&);
-   bool FromFile(const Many&);
-
-   ImageLibrary* mProducer;
-
-   bool ReadPNG(const A::File&);
-   bool WritePNG(const A::File&) const;
-   bool CompareInner(const Image&) const;
+   NOD() auto GetLOD(const LOD&) const -> Ref<A::Image>;
+   NOD() auto GetGPUHandle() const noexcept -> void*;
 };
 
