@@ -27,7 +27,9 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Many& desc)
    if (not desc.ExtractTrait<Traits::Name, Traits::Path>(repo))
       desc.ExtractDataAs(repo);
 
-   try { mFolder = GetRuntime()->GetFolder(repo); }
+   try {
+      mFolder = GetRuntime()->GetFolder(repo);
+   }
    catch (...) {
       Logger::Warning(Self(), 
          "Can't access image asset library folder `", desc,
@@ -39,6 +41,16 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Many& desc)
    }
 
    VERBOSE_IMAGES("Initialized");
+}
+
+/// Destroy the image library                                                 
+ImageLibrary::~ImageLibrary() {
+   Teardown();
+}
+
+/// First stage destruction                                                   
+void ImageLibrary::Teardown() {
+   mImages.Teardown();
 }
 
 /// Create/Destroy image assets                                               

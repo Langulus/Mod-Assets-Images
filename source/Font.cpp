@@ -16,12 +16,17 @@ Font::Font(ImageLibrary* producer, const Many& descriptor)
    : Resolvable   {this}
    , ProducedFrom {producer, descriptor} {}
 
-Ref<A::Image> Font::GetLOD(const Math::LOD&) const {
+/// Generate a level of detail                                                
+///   @param level-of-detail observation point                                
+///   @return the generated LOD image                                         
+auto Font::GetLOD(const Math::LOD&) const -> Ref<A::Image> {
    TODO();
    return {};
 }
 
-void* Font::GetGPUHandle() const noexcept {
+/// Get a GPU handle                                                          
+///   @return an opaque pointer representing the handle                       
+auto Font::GetGPUHandle() const noexcept -> void* {
    TODO();
    return {};
 }

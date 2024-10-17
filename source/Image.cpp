@@ -15,8 +15,7 @@
 ///   @param desc - instructions for configuring the image                    
 Image::Image(ImageLibrary* producer, const Many& desc)
    : Resolvable   {this}
-   , ProducedFrom {producer, desc}
-   , mProducer    {producer} {
+   , ProducedFrom {producer, desc} {
    VERBOSE_IMAGES("Initializing...");
    
    if (not FromFile(desc)) {
@@ -71,7 +70,7 @@ void Image::Compare(Verb& verb) const {
    else if (verb.CastsTo<A::Text>()) {
       // Compare against other images                                   
       Verbs::Create rhsCreator {Construct::From<Image>(verb.GetArgument())};
-      mProducer->Create(rhsCreator);
+      GetLibrary()->Create(rhsCreator);
       verb << (CompareInner(rhsCreator->As<Image>())
          ? Compared::Equal
          : Compared::Unequal);
@@ -97,9 +96,11 @@ bool Image::CompareInner(const Image& rhs) const {
       while (lit != end()) {
          if (lit.As<RGBA>() != rit.As<RGBA>()) //TODO SIMD the crap out of this using shuffles
             return false;
+
          ++lit;
          ++rit;
       }
+
       return true;
    }
    else if (rhs.GetView().mHeight == GetView().mHeight
@@ -112,9 +113,11 @@ bool Image::CompareInner(const Image& rhs) const {
       while (lit != end()) {
          if (lit.As<RGBA>() != rit.As<RGBA>())
             return false;
+
          ++lit;
          ++rit;
       }
+
       return true;
    }
 
@@ -134,14 +137,14 @@ bool Image::Generate(TMeta trait, Offset index) {
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
-Ref<A::Image> Image::GetLOD(const LOD&) const {
+auto Image::GetLOD(const LOD&) const -> Ref<A::Image> {
    TODO();
    return {};
 }
 
 /// Returns nullptr, because this is not a GPU image                          
 ///   @return nullptr                                                         
-void* Image::GetGPUHandle() const noexcept {
+auto Image::GetGPUHandle() const noexcept -> void* {
    return nullptr;
 }
 
@@ -171,4 +174,10 @@ bool Image::FromFile(const Many& desc) {
    }
 
    return false;
+}
+
+/// Get the image library                                                     
+///   @return the library                                                     
+auto Image::GetLibrary() const -> ImageLibrary* {
+   return mProducer.template As<ImageLibrary>();
 }

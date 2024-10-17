@@ -21,8 +21,6 @@ struct Image final : A::Image {
    LANGULUS_VERBS(Verbs::Compare);
 
 private:
-   ImageLibrary* mProducer;
-
    bool FromDescriptor(const Many&);
    bool FromFile(const Many&);
    bool ReadPNG(const A::File&);
@@ -38,5 +36,6 @@ public:
 
    NOD() auto GetLOD(const LOD&) const -> Ref<A::Image>;
    NOD() auto GetGPUHandle() const noexcept -> void*;
+   NOD() auto GetLibrary() const -> ImageLibrary*;
 };
 

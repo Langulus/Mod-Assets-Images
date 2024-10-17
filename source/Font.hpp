@@ -21,6 +21,7 @@ public:
    Font(ImageLibrary*, const Many&);
 
    void Refresh() {}
+
    bool Generate(TMeta, Offset = 0) {
       TODO();
       return false;
