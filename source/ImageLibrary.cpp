@@ -43,13 +43,9 @@ ImageLibrary::ImageLibrary(Runtime* runtime, const Many& desc)
    VERBOSE_IMAGES("Initialized");
 }
 
-/// Destroy the image library                                                 
-ImageLibrary::~ImageLibrary() {
-   Teardown();
-}
-
 /// First stage destruction                                                   
 void ImageLibrary::Teardown() {
+   mFolder.Reset();
    mImages.Teardown();
 }
 

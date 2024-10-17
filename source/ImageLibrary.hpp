@@ -23,7 +23,6 @@ private:
 
 public:
    ImageLibrary(Runtime*, const Many&);
-  ~ImageLibrary();
 
    void Create(Verb&);
    void Teardown();
