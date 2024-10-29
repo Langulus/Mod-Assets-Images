@@ -38,12 +38,9 @@ file(GLOB_RECURSE
 )
 
 # Build the module                                                              
-add_library(LangulusModAssetsImages SHARED ${LANGULUS_MOD_ASSETS_IMAGES_SOURCES})
+add_langulus_mod(LangulusModAssetsImages ${LANGULUS_MOD_ASSETS_IMAGES_SOURCES})
 
-target_link_libraries(LangulusModAssetsImages 
-    PRIVATE     Langulus
-                png_static
-)
+target_link_libraries(LangulusModAssetsImages PRIVATE png_static)
 
 if(LANGULUS_TESTING)
     enable_testing()
