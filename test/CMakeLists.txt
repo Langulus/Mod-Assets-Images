@@ -4,22 +4,11 @@ file(GLOB_RECURSE
 	*.cpp
 )
 
-add_executable(LangulusModAssetsImagesTest ${LANGULUS_MOD_ASSETS_IMAGES_TEST_SOURCES})
-
-target_link_libraries(LangulusModAssetsImagesTest
-	PRIVATE		Langulus
-				Catch2
-)
-
-add_dependencies(LangulusModAssetsImagesTest
-	LangulusModAssetsImages
-	LangulusModFileSystem
-)
-
-add_test(
-	NAME		LangulusModAssetsImagesTest
-	COMMAND		LangulusModAssetsImagesTest
-	WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+add_langulus_test(LangulusModAssetsImagesTest
+	SOURCES			${LANGULUS_MOD_ASSETS_IMAGES_TEST_SOURCES}
+	LIBRARIES		Langulus
+	DEPENDENCIES    LangulusModAssetsImages
+					LangulusModFileSystem
 )
 
 # Make the write and read data dir for PhysFS, because it doesn't have access   
