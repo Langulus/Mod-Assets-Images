@@ -27,7 +27,7 @@ public:
       return false;
    }
 
-   NOD() auto GetLOD(const Math::LOD&) const -> Ref<A::Image>;
-   NOD() auto GetGPUHandle() const noexcept -> void*;
+   auto GetLOD(const Math::LOD&) const -> Ref<A::Image>;
+   auto GetGPUHandle() const noexcept -> void*;
 };
 

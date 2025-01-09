@@ -34,8 +34,8 @@ public:
    void Compare(Verb&) const;
    bool Generate(TMeta, Offset = 0);
 
-   NOD() auto GetLOD(const LOD&) const -> Ref<A::Image>;
-   NOD() auto GetGPUHandle() const noexcept -> void*;
-   NOD() auto GetLibrary() const -> ImageLibrary*;
+   auto GetLOD(const LOD&) const -> Ref<A::Image>;
+   auto GetGPUHandle() const noexcept -> void*;
+   auto GetLibrary() const -> ImageLibrary*;
 };
 
