@@ -7,7 +7,7 @@
 ///                                                                           
 #pragma once
 #include "Common.hpp"
-#include <Flow/Verbs/Compare.hpp>
+#include <Langulus/Verbs/Compare.hpp>
 
 
 ///                                                                           

@@ -7,7 +7,7 @@
 ///                                                                           
 #include "Image.hpp"
 #include <Langulus/IO.hpp>
-#include <Flow/Time.hpp>
+#include <Langulus/Flow/Time.hpp>
 #include <png.h>
 
 
