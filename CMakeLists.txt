@@ -43,6 +43,6 @@ add_langulus_mod(LangulusModAssetsImages ${LANGULUS_MOD_ASSETS_IMAGES_SOURCES})
 target_link_libraries(LangulusModAssetsImages PRIVATE png_static)
 
 if(LANGULUS_TESTING)
-    enable_testing()
+	enable_testing()
     add_subdirectory(test)
 endif()
