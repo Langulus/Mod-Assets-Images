@@ -7,6 +7,7 @@
 ///                                                                           
 #pragma once
 #include "Image.hpp"
+#include <Langulus/Flow/Factory.hpp>
 
 
 ///                                                                           
