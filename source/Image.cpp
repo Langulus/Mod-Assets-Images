@@ -128,7 +128,7 @@ bool Image::CompareInner(const Image& rhs) const {
 ///   @param trait - the trait to generate                                    
 ///   @param index - trait group to generate                                  
 ///   @return true if data was generated                                      
-bool Image::Generate(TMeta trait, Offset index) {
+bool Image::Generate(TMeta trait, size_t index) {
    if (trait->Is<Traits::Color>() and index == 0)
       return true;
    return false;

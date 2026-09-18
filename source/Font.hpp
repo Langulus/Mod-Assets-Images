@@ -22,7 +22,7 @@ public:
 
    void Refresh() {}
 
-   bool Generate(TMeta, Offset = 0) {
+   bool Generate(TMeta, size_t = 0) {
       TODO();
       return false;
    }

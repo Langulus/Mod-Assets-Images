@@ -239,7 +239,7 @@ bool Image::WritePNG(const A::File& file) const {
    const auto pitch = view.mWidth * view.mFormat->mSize;
    TMany<png_byte*> rows;
    rows.Reserve(view.mHeight);
-   for (Offset i = 0; i < view.mHeight; i++)
+   for (size_t i = 0; i < view.mHeight; i++)
       rows << const_cast<png_byte*>(rawDataPtr + i * pitch);
 
    png_write_image(fileWriter.png_ptr, rows.GetRaw());

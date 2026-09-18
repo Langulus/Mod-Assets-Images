@@ -32,7 +32,7 @@ public:
 
    void Refresh() {}
    void Compare(Verb&) const;
-   bool Generate(TMeta, Offset = 0);
+   bool Generate(TMeta, size_t = 0);
 
    auto GetLOD(const LOD&) const -> Ref<A::Image>;
    auto GetGPUHandle() const noexcept -> void*;
