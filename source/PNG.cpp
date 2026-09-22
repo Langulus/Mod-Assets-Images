@@ -7,7 +7,7 @@
 ///                                                                           
 #include "Image.hpp"
 #include <Langulus/IO.hpp>
-#include <Langulus/Flow/Time.hpp>
+#include <Langulus/Time.hpp>
 #include <png.h>
 
 
@@ -38,7 +38,7 @@ struct PNGFileHelper {
       if (not io_ptr)
          return;
 
-      auto inputStream = static_cast<A::File::Reader*>(io_ptr);
+      auto inputStream = static_cast<Things::File::Reader*>(io_ptr);
       Many outputBlock = Disown(MakeBlock(outBytes, byteCountToRead));
       inputStream->Read(outputBlock);
    }
@@ -49,7 +49,7 @@ struct PNGFileHelper {
       if (not io_ptr)
          return;
 
-      auto outputStream = static_cast<A::File::Writer*>(io_ptr);
+      auto outputStream = static_cast<Things::File::Writer*>(io_ptr);
       Many inputBlock = Disown(MakeBlock(inBytes, byteCountToWrite));
       outputStream->Write(inputBlock);
    }

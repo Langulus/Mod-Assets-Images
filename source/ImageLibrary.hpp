@@ -7,13 +7,13 @@
 ///                                                                           
 #pragma once
 #include "Image.hpp"
-#include <Langulus/Flow/Factory.hpp>
+#include <Langulus/Factory.hpp>
 
 
 ///                                                                           
 ///   Image reading, writing, and generation module                           
 ///                                                                           
-struct ImageLibrary final : A::AssetModule {
+struct ImageLibrary final : Things::AssetModule {
    LANGULUS(ABSTRACT) false;
    LANGULUS_BASES(A::AssetModule);
    LANGULUS_VERBS(Verbs::Create);
