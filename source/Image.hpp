@@ -21,14 +21,14 @@ struct Image final : A::Image {
    LANGULUS_VERBS(Verbs::Compare);
 
 private:
-   bool FromDescriptor(const Many&);
-   bool FromFile(const Many&);
+   bool FromDescriptor(Many const&);
+   bool FromFile(Many const&);
    bool ReadPNG(const A::File&);
    bool WritePNG(const A::File&) const;
    bool CompareInner(const Image&) const;
 
 public:
-   Image(ImageLibrary*, const Many&);
+   Image(ImageLibrary*, Many const&);
 
    void Refresh() {}
    void Compare(Verb&) const;
