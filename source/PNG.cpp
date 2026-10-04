@@ -6,7 +6,7 @@
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
 #include "Image.hpp"
-#include <Langulus/IO.hpp>
+#include <Langulus/CppAPI/IO.hpp>
 #include <Langulus/Time.hpp>
 #include <png.h>
 
@@ -168,7 +168,7 @@ bool Image::ReadPNG(const A::File& file) {
    png_read_image(fileReader.png_ptr, row_pointers.data());
 
    // Save the contents                                                 
-   Commit<Traits::Color>(Abandon(rawData));
+   Commit<Tags::Color>(Abandon(rawData));
 
    Logger::Verbose(Logger::Green, "File ", file.GetFilePath(), 
       " loaded in ", SteadyClock::Now() - loadTime);
@@ -180,7 +180,7 @@ bool Image::ReadPNG(const A::File& file) {
 ///   @param source - the texture to save                                     
 ///   @return true if image was saved without any problems                    
 bool Image::WritePNG(const A::File& file) const {
-   auto rawData = GetData<Traits::Color>();
+   auto rawData = GetData<Tags::Color>();
    if (not rawData or not *rawData)
       return false;
 

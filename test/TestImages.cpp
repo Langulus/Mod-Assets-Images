@@ -21,7 +21,7 @@ SCENARIO("Loading non-existent file", "[images]") {
          );
 
          WHEN("The texture is created via abstractions") {
-            REQUIRE_THROWS(root.CreateUnit<A::Image>("nonexistent.png"));
+            REQUIRE_THROWS(root.CreateUnit<Things::Image>("nonexistent.png"));
             REQUIRE(root.GetUnits().IsEmpty());
          }
          
@@ -50,14 +50,14 @@ SCENARIO("Image creation", "[images]") {
          );
        
          WHEN("The texture is created via abstractions") {
-            auto producedTexture = root.CreateUnit<A::Image>("pattern.png");
+            auto producedTexture = root.CreateUnit<Things::Image>("pattern.png");
 
             // Update once                                              
             root.Update({});
             root.DumpHierarchy();
 
             REQUIRE(producedTexture.GetCount() == 1);
-            REQUIRE(producedTexture.CastsTo<A::Image>(1));
+            REQUIRE(producedTexture.CastsTo<Things::Image>(1));
             REQUIRE(producedTexture.IsSparse());
             REQUIRE(root.GetUnits().GetCount() == 1);
          }
@@ -71,7 +71,7 @@ SCENARIO("Image creation", "[images]") {
             root.DumpHierarchy();
 
             REQUIRE(producedTexture.GetCount() == 1);
-            REQUIRE(producedTexture.CastsTo<A::Image>(1));
+            REQUIRE(producedTexture.CastsTo<Things::Image>(1));
             REQUIRE(producedTexture.IsSparse());
             REQUIRE(root.GetUnits().GetCount() == 1);
          }

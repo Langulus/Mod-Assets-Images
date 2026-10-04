@@ -19,7 +19,7 @@ Font::Font(ImageLibrary* producer, Many const& descriptor)
 /// Generate a level of detail                                                
 ///   @param level-of-detail observation point                                
 ///   @return the generated LOD image                                         
-auto Font::GetLOD(const Math::LOD&) const -> Ref<A::Image> {
+auto Font::GetLOD(const Math::LOD&) const -> Ref<Things::Image> {
    TODO();
    return {};
 }

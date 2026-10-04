@@ -6,18 +6,18 @@
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
 #pragma once
-#include "Common.hpp"
+#include "Export.hpp"
 #include <Langulus/Verbs/Compare.hpp>
 
 
 ///                                                                           
 ///   Image asset                                                             
 ///                                                                           
-struct Image final : A::Image {
-   LANGULUS(ABSTRACT) false;
-   LANGULUS(PRODUCER) ImageLibrary;
+struct Image final : Things::Image {
+   using CTTI_Abstract = No;
+   using CTTI_Producer = ImageLibrary;
    LANGULUS(FILES) "png";
-   LANGULUS_BASES(A::Image);
+   LANGULUS_BASES(Things::Image);
    LANGULUS_VERBS(Verbs::Compare);
 
 private:
@@ -34,7 +34,7 @@ public:
    void Compare(Verb&) const;
    bool Generate(TMeta, size_t = 0);
 
-   auto GetLOD(const LOD&) const -> Ref<A::Image>;
+   auto GetLOD(const LOD&) const -> Ref<Things::Image>;
    auto GetGPUHandle() const noexcept -> void*;
    auto GetLibrary() const -> ImageLibrary*;
 };

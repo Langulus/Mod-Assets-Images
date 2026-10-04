@@ -6,16 +6,16 @@
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
 #pragma once
-#include "Common.hpp"
+#include "Export.hpp"
 
 
 ///                                                                           
 ///   Font asset                                                              
 ///                                                                           
-struct Font final : A::Image {
-   LANGULUS(ABSTRACT) false;
-   LANGULUS(PRODUCER) ImageLibrary;
-   LANGULUS_BASES(A::Image);
+struct Font final : Things::Image {
+   using CTTI_Abstract = No;
+   using CTTI_Producer = ImageLibrary;
+   LANGULUS_BASES(Things::Image);
 
 public:
    Font(ImageLibrary*, Many const&);
@@ -27,7 +27,7 @@ public:
       return false;
    }
 
-   auto GetLOD(const Math::LOD&) const -> Ref<A::Image>;
+   auto GetLOD(const Math::LOD&) const -> Ref<Things::Image>;
    auto GetGPUHandle() const noexcept -> void*;
 };
 

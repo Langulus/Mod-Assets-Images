@@ -7,7 +7,7 @@
 ///                                                                           
 #include "Image.hpp"
 #include "ImageLibrary.hpp"
-#include <Langulus/IO.hpp>
+#include <Langulus/CppAPI/IO.hpp>
 
 
 /// Image construction                                                        
@@ -61,7 +61,7 @@ void Image::Compare(Verb& verb) const {
             : Compared::Unequal);
       }
    }
-   else if (verb.CastsTo<A::Image>()) {
+   else if (verb.CastsTo<Things::Image>()) {
       // Compare against other images                                   
       verb << (CompareInner(verb->As<Image>())
          ? Compared::Equal
@@ -129,7 +129,7 @@ bool Image::CompareInner(const Image& rhs) const {
 ///   @param index - trait group to generate                                  
 ///   @return true if data was generated                                      
 bool Image::Generate(TMeta trait, size_t index) {
-   if (trait->Is<Traits::Color>() and index == 0)
+   if (trait->Is<Tags::Color>() and index == 0)
       return true;
    return false;
 }
@@ -137,7 +137,7 @@ bool Image::Generate(TMeta trait, size_t index) {
 /// Get a level of detail (mip level)                                         
 ///   @param lod - the LOD state                                              
 ///   @return the level of detail image                                       
-auto Image::GetLOD(const LOD&) const -> Ref<A::Image> {
+auto Image::GetLOD(const LOD&) const -> Ref<Things::Image> {
    TODO();
    return {};
 }
