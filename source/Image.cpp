@@ -69,7 +69,7 @@ void Image::Compare(Verb& verb) const {
    }
    else if (verb.CastsTo<A::Text>()) {
       // Compare against other images                                   
-      Verbs::Create rhsCreator {Construct::From<Image>(verb.GetArgument())};
+      Verbs::Create rhsCreator {Recipe::From<Image>(verb.GetArgument())};
       GetLibrary()->Create(rhsCreator);
       verb << (CompareInner(rhsCreator->As<Image>())
          ? Compared::Equal
