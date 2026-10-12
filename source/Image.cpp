@@ -42,7 +42,7 @@ Image::Image(ImageLibrary* producer, Many const& desc)
 /// Compare image to another image/uniform color, etc.                        
 ///   @param verb - the comparison verb                                       
 void Image::Compare(Verb& verb) const {
-   if (verb.CastsTo<A::Color>()) {
+   if (verb.CastsTo<Math::Color>()) {
       // Compare against colors                                         
       if (verb.GetCount() == 1) {
          // Check if texture is filled with a uniform color             
@@ -67,7 +67,7 @@ void Image::Compare(Verb& verb) const {
          ? Compared::Equal
          : Compared::Unequal);
    }
-   else if (verb.CastsTo<A::Text>()) {
+   else if (verb.CastsTo<Text>()) {
       // Compare against other images                                   
       Verbs::Create rhsCreator {Recipe::From<Image>(verb.GetArgument())};
       GetLibrary()->Create(rhsCreator);
