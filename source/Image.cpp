@@ -125,11 +125,11 @@ bool Image::CompareInner(const Image& rhs) const {
 }
 
 /// Generate color data                                                       
-///   @param trait - the trait to generate                                    
-///   @param index - trait group to generate                                  
+///   @param tag - the tag to generate                                    
+///   @param index - tag group to generate                                  
 ///   @return true if data was generated                                      
-bool Image::Generate(TMeta trait, size_t index) {
-   if (trait->Is<Tags::Color>() and index == 0)
+bool Image::Generate(TMeta tag, size_t index) {
+   if (tag->Is<Tags::Color>() and index == 0)
       return true;
    return false;
 }
@@ -163,7 +163,7 @@ bool Image::FromDescriptor(Many const& desc) {
 ///   @param descriptor - the file to load                                    
 bool Image::FromFile(Many const& desc) {
    Path filename;
-   if (not desc.ExtractTrait<Traits::Name, Traits::Path>(filename))
+   if (not desc.ExtractTag<Tags::Name, Tags::Path>(filename))
       desc.ExtractDataAs(filename);
 
    if (filename) {

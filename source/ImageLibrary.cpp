@@ -24,7 +24,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, Many const& desc)
 
    // Extract mesh folder, if any                                       
    Path repo = "assets/images";
-   if (not desc.ExtractTrait<Traits::Name, Traits::Path>(repo))
+   if (not desc.ExtractTag<Tags::Name, Tags::Path>(repo))
       desc.ExtractDataAs(repo);
 
    try {
