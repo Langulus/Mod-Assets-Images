@@ -59,7 +59,7 @@ struct PNGFileHelper {
 ///   @param file - [in/out] the file to load from                            
 ///   @param destination - [out] the texture to load to                       
 ///   @return true if image was loaded without any problems                   
-bool Image::ReadPNG(const A::File& file) {
+bool Image::ReadPNG(const Things::File& file) {
    auto loadTime = SteadyClock::Now();
    auto stream = file.NewReader();
 
@@ -179,13 +179,13 @@ bool Image::ReadPNG(const A::File& file) {
 ///   @param file - [in/out] the file to write to                             
 ///   @param source - the texture to save                                     
 ///   @return true if image was saved without any problems                    
-bool Image::WritePNG(const A::File& file) const {
+bool Image::WritePNG(const Things::File& file) const {
    auto rawData = GetData<Tags::Color>();
    if (not rawData or not *rawData)
       return false;
 
    //auto writeTime = SteadyClock::Now();
-   auto stream = const_cast<A::File&>(file).NewWriter(false);
+   auto stream = const_cast<Things::File&>(file).NewWriter(false);
    if (not stream) {
       Logger::Error("Cannot open file: ", file);
       return false;

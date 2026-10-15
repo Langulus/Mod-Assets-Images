@@ -23,8 +23,8 @@ struct Image final : Things::Image {
 private:
    bool FromDescriptor(Many const&);
    bool FromFile(Many const&);
-   bool ReadPNG(const A::File&);
-   bool WritePNG(const A::File&) const;
+   bool ReadPNG(const Things::File&);
+   bool WritePNG(const Things::File&) const;
    bool CompareInner(const Image&) const;
 
 public:
