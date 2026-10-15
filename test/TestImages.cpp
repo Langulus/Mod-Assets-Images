@@ -27,7 +27,7 @@ SCENARIO("Loading non-existent file", "[images]") {
          
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
          WHEN("The texture is created via tokens") {
-            REQUIRE_THROWS(root.CreateUnitToken("Image", "nonexistent.png"));
+            REQUIRE_THROWS(root.CreatePartToken("Image", "nonexistent.png"));
             REQUIRE(root.GetUnits().IsEmpty());
          }
       #endif
@@ -64,7 +64,7 @@ SCENARIO("Image creation", "[images]") {
   
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
          WHEN("The texture is created via tokens") {
-            auto producedTexture = root.CreateUnitToken("Image", "pattern.png");
+            auto producedTexture = root.CreatePartToken("Image", "pattern.png");
 
             // Update once                                              
             root.Update({});
