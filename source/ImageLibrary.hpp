@@ -14,16 +14,16 @@
 ///   Image reading, writing, and generation module                           
 ///                                                                           
 struct ImageLibrary final : Things::AssetModule {
-   using CTTI_Abstract = No;
-   LANGULUS_BASES(Things::AssetModule);
-   LANGULUS_VERBS(Verbs::Create);
+   using CTTI_Abstract  = No;
+   using CTTI_Bases     = Things::AssetModule;
+   using CTTI_Ability   = Verbs::Create;
 
 private:
    // Image library                                                     
-   TFactoryUnique<::Image> mImages;
+   TFactoryUnique<Image> mImages;
 
 public:
-   ImageLibrary(Runtime*, Many const&);
+   ImageLibrary(Things::Runtime*, Many const&);
 
    void Create(Verb&);
    void Teardown();

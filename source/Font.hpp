@@ -13,9 +13,9 @@
 ///   Font asset                                                              
 ///                                                                           
 struct Font final : Things::Image {
-   using CTTI_Abstract = No;
-   using CTTI_Producer = ImageLibrary;
-   LANGULUS_BASES(Things::Image);
+   using CTTI_Abstract  = No;
+   using CTTI_Producer  = ImageLibrary;
+   using CTTI_Bases     = Things::Image;
 
 public:
    Font(ImageLibrary*, Many const&);

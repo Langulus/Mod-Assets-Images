@@ -11,11 +11,11 @@
 
 
 /// Image construction                                                        
-///   @param producer - the image producer                                    
-///   @param desc - instructions for configuring the image                    
+///   @param producer the image producer                                      
+///   @param desc instructions for configuring the image                      
 Image::Image(ImageLibrary* producer, Many const& desc)
-   : Resolvable   {this}
-   , ProducedFrom {producer, desc} {
+   : /*Resolvable   {this}
+   ,*/ ProducedFrom {producer, desc} {
    VERBOSE_IMAGES("Initializing...");
    
    if (not FromFile(desc)) {
@@ -28,8 +28,7 @@ Image::Image(ImageLibrary* producer, Many const& desc)
       }
       else {
          // Configure a generator from descriptor                       
-         LANGULUS_ASSERT(FromDescriptor(desc),
-            Image, "Couldn't create image generator");
+         LglsAssert(FromDescriptor(desc), "Couldn't create image generator");
       }
    }
 
@@ -40,7 +39,7 @@ Image::Image(ImageLibrary* producer, Many const& desc)
 }
 
 /// Compare image to another image/uniform color, etc.                        
-///   @param verb - the comparison verb                                       
+///   @param verb the comparison verb                                         
 void Image::Compare(Verb& verb) const {
    if (verb.CastsTo<Math::Color>()) {
       // Compare against colors                                         
@@ -79,7 +78,7 @@ void Image::Compare(Verb& verb) const {
 
 /// Inner pixel-by-pixel comparison                                           
 /// Accounts for inversed pixel formats                                       
-///   @param rhs - the image to compare against                               
+///   @param rhs the image to compare against                                 
 ///   @return true if both images match exactly                               
 bool Image::CompareInner(const Image& rhs) const {
    if (rhs.GetView() == GetView()
@@ -125,17 +124,17 @@ bool Image::CompareInner(const Image& rhs) const {
 }
 
 /// Generate color data                                                       
-///   @param tag - the tag to generate                                    
-///   @param index - tag group to generate                                  
+///   @param tag the tag to generate                                          
+///   @param index tag group to generate                                      
 ///   @return true if data was generated                                      
 bool Image::Generate(TMeta tag, size_t index) {
-   if (tag->Is<Tags::Color>() and index == 0)
+   if (tag == MetaTagOf<Tags::Color>() and index == 0)
       return true;
    return false;
 }
 
 /// Get a level of detail (mip level)                                         
-///   @param lod - the LOD state                                              
+///   @param lod the LOD state                                                
 ///   @return the level of detail image                                       
 auto Image::GetLOD(const LOD&) const -> Ref<Things::Image> {
    TODO();
@@ -149,9 +148,9 @@ auto Image::GetGPUHandle() const noexcept -> void* {
 }
 
 /// Populate the image view and generator functions, by analyzing descriptor  
-///   @param desc - the descriptor to parse                                   
+///   @param desc the descriptor to parse                                     
 bool Image::FromDescriptor(Many const& desc) {
-   const auto primitive = desc.FindType<A::Primitive>();
+   const auto primitive = desc.FindType<Math::Primitive>();
    if (not primitive)
       return false;
    
@@ -160,7 +159,7 @@ bool Image::FromDescriptor(Many const& desc) {
 }
 
 /// Load image via filename/file interface                                    
-///   @param descriptor - the file to load                                    
+///   @param descriptor the file to load                                      
 bool Image::FromFile(Many const& desc) {
    Path filename;
    if (not desc.ExtractTag<Tags::Name, Tags::Path>(filename))

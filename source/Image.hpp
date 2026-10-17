@@ -14,11 +14,11 @@
 ///   Image asset                                                             
 ///                                                                           
 struct Image final : Things::Image {
-   using CTTI_Abstract = No;
-   using CTTI_Producer = ImageLibrary;
-   LANGULUS(FILES) "png";
-   LANGULUS_BASES(Things::Image);
-   LANGULUS_VERBS(Verbs::Compare);
+   using CTTI_Abstract  = No;
+   using CTTI_Producer  = ImageLibrary;
+   using CTTI_Files     = Yes<"png">;
+   using CTTI_Bases     = Things::Image;
+   using CTTI_Ability   = Verbs::Compare;
 
 private:
    bool FromDescriptor(Many const&);

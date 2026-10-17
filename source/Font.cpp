@@ -10,11 +10,11 @@
 
 
 /// Font descriptor-constructor                                               
-///   @param producer - the image producer                                    
-///   @param descriptor - instructions for configuring the image              
+///   @param producer the image producer                                      
+///   @param descriptor instructions for configuring the image                
 Font::Font(ImageLibrary* producer, Many const& descriptor)
-   : Resolvable   {this}
-   , ProducedFrom {producer, descriptor} {}
+   : /*Resolvable   {this}
+   ,*/ ProducedFrom {producer, descriptor} {}
 
 /// Generate a level of detail                                                
 ///   @param level-of-detail observation point                                
