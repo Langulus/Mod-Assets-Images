@@ -23,7 +23,7 @@ private:
    TFactoryUnique<Image> mImages;
 
 public:
-   ImageLibrary(Things::Runtime*, Many const&);
+   ImageLibrary(Runtime*, Many const&);
 
    void Create(Verb&);
    void Teardown();
