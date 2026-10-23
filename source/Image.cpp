@@ -14,8 +14,8 @@
 ///   @param producer the image producer                                      
 ///   @param desc instructions for configuring the image                      
 Image::Image(ImageLibrary* producer, Many const& desc)
-   : /*Resolvable   {this}
-   ,*/ ProducedFrom {producer, desc} {
+   : Downcastable {this}
+   , ProducedFrom {producer, desc} {
    VERBOSE_IMAGES("Initializing...");
    
    if (not FromFile(desc)) {

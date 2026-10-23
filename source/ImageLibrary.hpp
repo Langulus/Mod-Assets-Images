@@ -13,9 +13,9 @@
 ///                                                                           
 ///   Image reading, writing, and generation module                           
 ///                                                                           
-struct ImageLibrary final : Things::AssetModule {
+struct ImageLibrary final : Things::ArtModule {
    using CTTI_Abstract  = No;
-   using CTTI_Bases     = Things::AssetModule;
+   using CTTI_Bases     = Things::ArtModule;
    using CTTI_Ability   = Verbs::Create;
 
 private:
