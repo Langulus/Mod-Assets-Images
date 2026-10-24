@@ -136,7 +136,7 @@ bool Image::Generate(TMeta tag, size_t index) {
 /// Get a level of detail (mip level)                                         
 ///   @param lod the LOD state                                                
 ///   @return the level of detail image                                       
-auto Image::GetLOD(const LOD&) const -> Ref<Things::Image> {
+auto Image::GetLOD(LOD const&) const -> Ref<Things::Image> {
    TODO();
    return {};
 }

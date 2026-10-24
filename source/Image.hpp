@@ -23,8 +23,8 @@ struct Image final : Things::Image {
 private:
    bool FromDescriptor(Many const&);
    bool FromFile(Many const&);
-   bool ReadPNG(const Things::File&);
-   bool WritePNG(const Things::File&) const;
+   bool ReadPNG(Things::File const&);
+   bool WritePNG(Things::File const&) const;
    bool CompareInner(const Image&) const;
 
 public:
@@ -34,7 +34,7 @@ public:
    void Compare(Verb&) const;
    bool Generate(TMeta, size_t = 0);
 
-   auto GetLOD(const LOD&) const -> Ref<Things::Image>;
+   auto GetLOD(LOD const&) const -> Ref<Things::Image> override;
    auto GetGPUHandle() const noexcept -> void*;
    auto GetLibrary() const -> ImageLibrary*;
 };

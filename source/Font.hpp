@@ -27,7 +27,7 @@ public:
       return false;
    }
 
-   auto GetLOD(const Math::LOD&) const -> Ref<Things::Image>;
+   auto GetLOD(Math::LOD const&) const -> Ref<Things::Image> override;
    auto GetGPUHandle() const noexcept -> void*;
 };
 

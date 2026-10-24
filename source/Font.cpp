@@ -13,13 +13,13 @@
 ///   @param producer the image producer                                      
 ///   @param descriptor instructions for configuring the image                
 Font::Font(ImageLibrary* producer, Many const& descriptor)
-   : /*Resolvable   {this}
-   ,*/ ProducedFrom {producer, descriptor} {}
+   : Downcastable {this}
+   , ProducedFrom {producer, descriptor} {}
 
 /// Generate a level of detail                                                
 ///   @param level-of-detail observation point                                
 ///   @return the generated LOD image                                         
-auto Font::GetLOD(const Math::LOD&) const -> Ref<Things::Image> {
+auto Font::GetLOD(Math::LOD const&) const -> Ref<Things::Image> {
    TODO();
    return {};
 }
