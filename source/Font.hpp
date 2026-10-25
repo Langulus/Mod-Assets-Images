@@ -10,8 +10,7 @@
 
 
 ///                                                                           
-///   Font asset                                                              
-///                                                                           
+///   Font art                                                                
 struct Font final : Things::Image {
    using CTTI_Abstract  = No;
    using CTTI_Producer  = ImageLibrary;
@@ -20,14 +19,14 @@ struct Font final : Things::Image {
 public:
    Font(ImageLibrary*, Many const&);
 
-   void Refresh() {}
+   void Refresh() override {}
 
-   bool Generate(TMeta, size_t = 0) {
+   bool Generate(TMeta, size_t = 0) override {
       TODO();
       return false;
    }
 
    auto GetLOD(Math::LOD const&) const -> Ref<Things::Image> override;
-   auto GetGPUHandle() const noexcept -> void*;
+   auto GetGPUHandle() const noexcept -> void* override;
 };
 

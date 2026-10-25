@@ -32,7 +32,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, Many const& desc)
    }
    catch (...) {
       Logger::Warning(this, 
-         "Can't access image asset library folder `", desc,
+         "Can't access image art library folder `", desc,
          "` - either folder is missing, or there's probably "
          "no file system module available. "
          "Image reading/writing won't be available, "

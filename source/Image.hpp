@@ -11,7 +11,7 @@
 
 
 ///                                                                           
-///   Image asset                                                             
+///   Image art                                                               
 struct Image final : Things::Image {
    using CTTI_Abstract  = No;
    using CTTI_Producer  = ImageLibrary;
