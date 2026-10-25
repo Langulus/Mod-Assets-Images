@@ -18,8 +18,8 @@ LANGULUS_DEFINE_MODULE(
 ///   @param runtime the runtime that owns the module                         
 ///   @param desc instructions for configuring the module                     
 ImageLibrary::ImageLibrary(Runtime* runtime, Many const& desc)
-   : /*Resolvable {this}
-   ,*/ Module     {runtime} {
+   : Downcastable {this}
+   , Module       {runtime} {
    VERBOSE_IMAGES("Initializing...");
 
    // Extract mesh folder, if any                                       
@@ -31,7 +31,7 @@ ImageLibrary::ImageLibrary(Runtime* runtime, Many const& desc)
       mFolder = GetRuntime()->GetFolder(repo);
    }
    catch (...) {
-      Logger::Warning(Self(), 
+      Logger::Warning(this, 
          "Can't access image asset library folder `", desc,
          "` - either folder is missing, or there's probably "
          "no file system module available. "

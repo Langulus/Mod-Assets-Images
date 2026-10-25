@@ -15,8 +15,8 @@ struct ImageLibrary;
 struct Image;
 
 #if 0
-   #define VERBOSE_IMAGES(...)      Logger::Verbose(Self(), __VA_ARGS__)
-   #define VERBOSE_IMAGES_TAB(...)  const auto tab = Logger::VerboseTab(Self(), __VA_ARGS__)
+   #define VERBOSE_IMAGES(...)      Logger::Verbose(this, __VA_ARGS__)
+   #define VERBOSE_IMAGES_TAB(...)  const auto tab = Logger::VerboseTab(this, __VA_ARGS__)
 #else
    #define VERBOSE_IMAGES(...)      LANGULUS(NOOP)
    #define VERBOSE_IMAGES_TAB(...)  LANGULUS(NOOP)

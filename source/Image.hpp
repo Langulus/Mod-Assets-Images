@@ -12,7 +12,6 @@
 
 ///                                                                           
 ///   Image asset                                                             
-///                                                                           
 struct Image final : Things::Image {
    using CTTI_Abstract  = No;
    using CTTI_Producer  = ImageLibrary;
@@ -30,12 +29,13 @@ private:
 public:
    Image(ImageLibrary*, Many const&);
 
-   void Refresh() {}
-   void Compare(Verb&) const;
-   bool Generate(TMeta, size_t = 0);
-
+   void Refresh() override {}
+   bool Generate(TMeta, size_t = 0) override;
+   auto GetGPUHandle() const noexcept -> void* override;
    auto GetLOD(LOD const&) const -> Ref<Things::Image> override;
-   auto GetGPUHandle() const noexcept -> void*;
+
+   void Compare(Verb&) const;
+
    auto GetLibrary() const -> ImageLibrary*;
 };
 
