@@ -178,5 +178,5 @@ bool Image::FromFile(Many const& desc) {
 /// Get the image library                                                     
 ///   @return the library                                                     
 auto Image::GetLibrary() const -> ImageLibrary* {
-   return mProducer.template As<ImageLibrary>();
+   return const_cast<ImageLibrary*>(mProducer.template As<ImageLibrary*>());
 }

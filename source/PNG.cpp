@@ -220,7 +220,7 @@ bool Image::WritePNG(Things::File const& file) const {
    else if (view.mFormat->IsExact<RGB>())
       pngFormat = PNG_COLOR_TYPE_RGB;
    else
-      LANGULUS_THROW(Write, "Unknown color type");
+      throw Exception("Unknown color type");
 
    png_set_IHDR(
       fileWriter.png_ptr, fileWriter.info_ptr,
