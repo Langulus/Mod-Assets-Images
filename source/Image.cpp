@@ -45,7 +45,7 @@ void Image::Compare(Verb& verb) const {
       // Compare against colors                                         
       if (verb.GetCount() == 1) {
          // Check if texture is filled with a uniform color             
-         const auto cast = verb.AsCast<RGBA>();
+         const auto cast = verb.As<RGBA>();
          const auto color = mView.mReverseFormat
             ? RGBA {cast[2], cast[1], cast[0], cast[3]}
             : cast;
@@ -57,22 +57,22 @@ void Image::Compare(Verb& verb) const {
 
          verb << (matches == mView.GetPixelCount()
             ? Compared::Equal
-            : Compared::Unequal);
+            : Compared::Unordered);
       }
    }
    else if (verb.CastsTo<Things::Image>()) {
-      // Compare against other images                                   
+      // Compare against interfaced images                              
       verb << (CompareInner(verb->As<Image>())
          ? Compared::Equal
-         : Compared::Unequal);
+         : Compared::Unordered);
    }
    else if (verb.CastsTo<Text>()) {
-      // Compare against other images                                   
+      // Compare against uninterfaced images by loading a file          
       Verbs::Create rhsCreator {Recipe::For<Image>(verb.GetRHS())};
       GetLibrary()->Create(rhsCreator);
       verb << (CompareInner(rhsCreator->As<Image>())
          ? Compared::Equal
-         : Compared::Unequal);
+         : Compared::Unordered);
    }
 }
 
@@ -87,7 +87,7 @@ bool Image::CompareInner(const Image& rhs) const {
       return GetDataListMap() == rhs.GetDataListMap();
    }
    else if (rhs.GetView() == GetView()
-   and rhs.GetView().mReverseFormat != GetView().mReverseFormat) {
+   and      rhs.GetView().mReverseFormat != GetView().mReverseFormat) {
       // We have to compare pixel-by-pixel, because one of the pixel    
       // formats is flipped                                             
       auto lit = begin();
@@ -103,9 +103,9 @@ bool Image::CompareInner(const Image& rhs) const {
       return true;
    }
    else if (rhs.GetView().mHeight == GetView().mHeight
-   and rhs.GetView().mWidth  == GetView().mWidth
-   and rhs.GetView().mDepth  == GetView().mDepth
-   and rhs.GetView().mFrames == GetView().mFrames) {
+   and      rhs.GetView().mWidth  == GetView().mWidth
+   and      rhs.GetView().mDepth  == GetView().mDepth
+   and      rhs.GetView().mFrames == GetView().mFrames) {
       // We have to compare pixel-by-pixel, because formats differ      
       auto lit = begin();
       auto rit = rhs.begin();
