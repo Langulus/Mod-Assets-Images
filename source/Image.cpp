@@ -80,37 +80,22 @@ void Image::Compare(Verb& verb) const {
 /// Accounts for inversed pixel formats                                       
 ///   @param rhs the image to compare against                                 
 ///   @return true if both images match exactly                               
-bool Image::CompareInner(const Image& rhs) const {
-   if (rhs.GetView() == GetView()
-   and rhs.GetView().mReverseFormat == GetView().mReverseFormat) {
+bool Image::CompareInner(Image const& rhs) const {
+   if (rhs.GetView() == GetView()) {
       // We can batch-compare                                           
       return GetDataListMap() == rhs.GetDataListMap();
    }
-   else if (rhs.GetView() == GetView()
-   and      rhs.GetView().mReverseFormat != GetView().mReverseFormat) {
+   else if (rhs.GetView().DimensionsMatch(GetView())) {
       // We have to compare pixel-by-pixel, because one of the pixel    
       // formats is flipped                                             
-      auto lit = begin();
-      auto rit = rhs.begin();
-      while (lit != end()) {
+      auto pixel_data1 = GetData<Tags::Color>();
+      auto pixel_data2 = rhs.GetData<Tags::Color>();
+      LglsAssert(pixel_data1 and pixel_data2, "No pixel data available");
+      auto lit = pixel_data1->GetHandle();
+      auto rit = pixel_data2->GetHandle();
+      const auto end = lit + pixel_data1->GetCount();
+      while (lit.GetRaw() != end.GetRaw()) {
          if (lit.As<RGBA>() != rit.As<RGBA>()) //TODO SIMD the crap out of this using shuffles
-            return false;
-
-         ++lit;
-         ++rit;
-      }
-
-      return true;
-   }
-   else if (rhs.GetView().mHeight == GetView().mHeight
-   and      rhs.GetView().mWidth  == GetView().mWidth
-   and      rhs.GetView().mDepth  == GetView().mDepth
-   and      rhs.GetView().mFrames == GetView().mFrames) {
-      // We have to compare pixel-by-pixel, because formats differ      
-      auto lit = begin();
-      auto rit = rhs.begin();
-      while (lit != end()) {
-         if (lit.As<RGBA>() != rit.As<RGBA>())
             return false;
 
          ++lit;
