@@ -39,7 +39,7 @@ struct PNGFileHelper {
          return;
 
       auto inputStream = static_cast<Things::File::Reader*>(io_ptr);
-      Many outputBlock = Disown(MakeBlock(outBytes, byteCountToRead));
+      auto outputBlock = Bytes::FromBytes(outBytes, byteCountToRead);
       inputStream->Read(outputBlock);
    }
 
@@ -50,14 +50,14 @@ struct PNGFileHelper {
          return;
 
       auto outputStream = static_cast<Things::File::Writer*>(io_ptr);
-      Many inputBlock = Disown(MakeBlock(inBytes, byteCountToWrite));
+      const auto inputBlock = Bytes::FromBytes(inBytes, byteCountToWrite);
       outputStream->Write(inputBlock);
    }
 };
 
 /// Load PNG from file                                                        
-///   @param file - [in/out] the file to load from                            
-///   @param destination - [out] the texture to load to                       
+///   @param file [in/out] the file to load from                              
+///   @param destination [out] the texture to load to                         
 ///   @return true if image was loaded without any problems                   
 bool Image::ReadPNG(Things::File const& file) {
    auto loadTime = SteadyClock::Now();
@@ -176,8 +176,8 @@ bool Image::ReadPNG(Things::File const& file) {
 }
 
 /// Save to PNG file                                                          
-///   @param file - [in/out] the file to write to                             
-///   @param source - the texture to save                                     
+///   @param file [in/out] the file to write to                               
+///   @param source the texture to save                                       
 ///   @return true if image was saved without any problems                    
 bool Image::WritePNG(Things::File const& file) const {
    auto rawData = GetData<Tags::Color>();
@@ -213,11 +213,11 @@ bool Image::WritePNG(Things::File const& file) const {
    // Pick the correct color format                                     
    auto& view = GetView();
    int pngFormat;
-   if (view.mFormat->IsExact<Red8>())
+   if (view.mFormat.IsExact<Red8>())
       pngFormat = PNG_COLOR_TYPE_GRAY;
-   else if (view.mFormat->IsExact<RGBA>())
+   else if (view.mFormat.IsExact<RGBA>())
       pngFormat = PNG_COLOR_TYPE_RGBA;
-   else if (view.mFormat->IsExact<RGB>())
+   else if (view.mFormat.IsExact<RGB>())
       pngFormat = PNG_COLOR_TYPE_RGB;
    else
       throw Exception("Unknown color type");
@@ -235,8 +235,8 @@ bool Image::WritePNG(Things::File const& file) const {
    png_write_info(fileWriter.png_ptr, fileWriter.info_ptr);
 
    // Write data                                                        
-   auto rawDataPtr = rawData->GetRaw<png_byte>();
-   const auto pitch = view.mWidth * view.mFormat->mSize;
+   auto rawDataPtr = rawData->GetRawAs<png_byte>();
+   const auto pitch = view.mWidth * view.mFormat.GetSize();
    TMany<png_byte*> rows;
    rows.Reserve(view.mHeight);
    for (size_t i = 0; i < view.mHeight; i++)
