@@ -92,7 +92,7 @@ bool Image::ReadPNG(Things::File const& file) {
       return false;
    }
 
-   png_set_read_fn(fileReader.png_ptr, stream, fileReader.Read);
+   png_set_read_fn(fileReader.png_ptr, *stream, fileReader.Read);
    png_set_sig_bytes(fileReader.png_ptr, 8);
    fileReader.info_ptr = png_create_info_struct(fileReader.png_ptr);
    if (not fileReader.info_ptr) {
@@ -161,10 +161,10 @@ bool Image::ReadPNG(Things::File const& file) {
    row_pointers.reserve(view.mHeight);
 
    auto pitch = png_get_rowbytes(fileReader.png_ptr, fileReader.info_ptr);
-   TMany<uint8_t> rawData;
+   Bytes rawData;
    rawData.New(pitch * view.mHeight);
    for (uint32_t i = 0; i < view.mHeight; i++)
-      row_pointers.push_back(rawData.GetRaw() + i * pitch);
+      row_pointers.push_back(rawData.GetRawAs<uint8_t>() + i * pitch);
    png_read_image(fileReader.png_ptr, row_pointers.data());
 
    // Save the contents                                                 
@@ -208,16 +208,16 @@ bool Image::WritePNG(Things::File const& file) const {
       return false;
    }
 
-   png_set_write_fn(fileWriter.png_ptr, stream, fileWriter.Write, nullptr);
+   png_set_write_fn(fileWriter.png_ptr, *stream, fileWriter.Write, nullptr);
 
    // Pick the correct color format                                     
    auto& view = GetView();
    int pngFormat;
-   if (view.mFormat.IsExact<Red8>())
+   if (view.mFormat.IsExact(MetaDataOf<Red8>()))
       pngFormat = PNG_COLOR_TYPE_GRAY;
-   else if (view.mFormat.IsExact<RGBA>())
+   else if (view.mFormat.IsExact(MetaDataOf<RGBA>()))
       pngFormat = PNG_COLOR_TYPE_RGBA;
-   else if (view.mFormat.IsExact<RGB>())
+   else if (view.mFormat.IsExact(MetaDataOf<RGB>()))
       pngFormat = PNG_COLOR_TYPE_RGB;
    else
       throw Exception("Unknown color type");
