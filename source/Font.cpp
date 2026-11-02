@@ -12,7 +12,7 @@
 /// Font descriptor-constructor                                               
 ///   @param producer the image producer                                      
 ///   @param descriptor instructions for configuring the image                
-Font::Font(ImageLibrary* producer, Many const& descriptor)
+Font::Font(ImageLibrary* producer, Neat const& descriptor)
    : Downcastable {this}
    , ProducedFrom {producer, descriptor} {}
 

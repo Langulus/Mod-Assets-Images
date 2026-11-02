@@ -17,7 +17,7 @@ LANGULUS_DEFINE_MODULE(
 /// Module construction                                                       
 ///   @param runtime the runtime that owns the module                         
 ///   @param desc instructions for configuring the module                     
-ImageLibrary::ImageLibrary(Runtime* runtime, Many const& desc)
+ImageLibrary::ImageLibrary(Runtime* runtime, Neat const& desc)
    : Downcastable {this}
    , Module       {runtime} {
    VERBOSE_IMAGES("Initializing...");
