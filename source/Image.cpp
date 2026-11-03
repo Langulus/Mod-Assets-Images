@@ -13,7 +13,7 @@
 /// Image construction                                                        
 ///   @param producer the image producer                                      
 ///   @param desc instructions for configuring the image                      
-Image::Image(ImageLibrary* producer, Many const& desc)
+Image::Image(ImageLibrary* producer, Neat const& desc)
    : Downcastable {this}
    , ProducedFrom {producer, desc} {
    VERBOSE_IMAGES("Initializing...");

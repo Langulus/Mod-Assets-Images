@@ -27,7 +27,7 @@ private:
    bool CompareInner(const Image&) const;
 
 public:
-   Image(ImageLibrary*, Many const&);
+   Image(ImageLibrary*, Neat const&);
 
    void Refresh() override {}
    bool Generate(TMeta, size_t = 0) override;
