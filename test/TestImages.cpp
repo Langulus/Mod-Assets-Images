@@ -22,13 +22,13 @@ SCENARIO("Loading non-existent file", "[images]") {
 
          WHEN("The texture is created via abstractions") {
             REQUIRE_THROWS(root.CreateUnit<Things::Image>("nonexistent.png"));
-            REQUIRE(root.GetUnits().IsEmpty());
+            REQUIRE(root.GetParts().IsEmpty());
          }
          
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
          WHEN("The texture is created via tokens") {
             REQUIRE_THROWS(root.CreatePartToken("Image", "nonexistent.png"));
-            REQUIRE(root.GetUnits().IsEmpty());
+            REQUIRE(root.GetParts().IsEmpty());
          }
       #endif
 
@@ -59,7 +59,7 @@ SCENARIO("Image creation", "[images]") {
             REQUIRE(producedTexture.GetCount() == 1);
             REQUIRE(producedTexture.CastsTo<Things::Image>(1));
             REQUIRE(producedTexture.IsSparse());
-            REQUIRE(root.GetUnits().GetCount() == 1);
+            REQUIRE(root.GetParts().GetCount() == 1);
          }
   
       #if LANGULUS_FEATURE(MANAGED_REFLECTION)
@@ -73,7 +73,7 @@ SCENARIO("Image creation", "[images]") {
             REQUIRE(producedTexture.GetCount() == 1);
             REQUIRE(producedTexture.CastsTo<Things::Image>(1));
             REQUIRE(producedTexture.IsSparse());
-            REQUIRE(root.GetUnits().GetCount() == 1);
+            REQUIRE(root.GetParts().GetCount() == 1);
          }
       #endif
 
