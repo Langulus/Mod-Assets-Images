@@ -13,7 +13,7 @@
 /// Image construction                                                        
 ///   @param producer the image producer                                      
 ///   @param desc instructions for configuring the image                      
-Image::Image(ImageLibrary* producer, Neat const& desc)
+Image::Image(ImageLibrary const* producer, Neat const& desc)
    : Downcastable {this}
    , ProducedFrom {producer, desc} {
    VERBOSE_IMAGES("Initializing...");
@@ -134,7 +134,7 @@ auto Image::GetGPUHandle() const noexcept -> void* {
 
 /// Populate the image view and generator functions, by analyzing descriptor  
 ///   @param desc the descriptor to parse                                     
-bool Image::FromDescriptor(Many const& desc) {
+bool Image::FromDescriptor(Neat const& desc) {
    const auto primitive = desc.FindType<Math::Primitive>();
    if (not primitive)
       return false;
@@ -145,7 +145,7 @@ bool Image::FromDescriptor(Many const& desc) {
 
 /// Load image via filename/file interface                                    
 ///   @param descriptor the file to load                                      
-bool Image::FromFile(Many const& desc) {
+bool Image::FromFile(Neat const& desc) {
    Path filename;
    if (not desc.ExtractTag<Tags::Name, Tags::Path>(filename))
       desc.ExtractDataAs(filename);
@@ -154,7 +154,7 @@ bool Image::FromFile(Many const& desc) {
       // Load a filename if such was provided                           
       auto fileInterface = GetProducer()->GetFolder()->RelativeFile(filename);
       if (fileInterface)
-         return ReadPNG(*fileInterface);
+         return ReadPNG(**fileInterface);
    }
 
    return false;
@@ -162,6 +162,6 @@ bool Image::FromFile(Many const& desc) {
 
 /// Get the image library                                                     
 ///   @return the library                                                     
-auto Image::GetLibrary() const -> ImageLibrary* {
-   return const_cast<ImageLibrary*>(mProducer.template As<ImageLibrary*>());
+auto Image::GetLibrary() const noexcept -> ImageLibrary* {
+   return const_cast<ImageLibrary*>(static_cast<ImageLibrary const*>(mProducer));
 }

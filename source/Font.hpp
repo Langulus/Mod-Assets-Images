@@ -17,7 +17,7 @@ struct Font final : Things::Image {
    using CTTI_Bases     = Things::Image;
 
 public:
-   Font(ImageLibrary*, Neat const&);
+   Font(ImageLibrary const*, Neat const&);
 
    void Refresh() override {}
 

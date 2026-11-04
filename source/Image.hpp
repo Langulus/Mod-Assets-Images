@@ -20,14 +20,14 @@ struct Image final : Things::Image {
    using CTTI_Ability   = Verbs::Compare;
 
 private:
-   bool FromDescriptor(Many const&);
-   bool FromFile(Many const&);
+   bool FromDescriptor(Neat const&);
+   bool FromFile(Neat const&);
    bool ReadPNG(Things::File const&);
    bool WritePNG(Things::File const&) const;
-   bool CompareInner(const Image&) const;
+   bool CompareInner(Image const&) const;
 
 public:
-   Image(ImageLibrary*, Neat const&);
+   Image(ImageLibrary const*, Neat const&);
 
    void Refresh() override {}
    bool Generate(TMeta, size_t = 0) override;
@@ -36,6 +36,6 @@ public:
 
    void Compare(Verb&) const;
 
-   auto GetLibrary() const -> ImageLibrary*;
+   auto GetLibrary() const noexcept -> ImageLibrary*;
 };
 
