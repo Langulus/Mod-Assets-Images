@@ -7,6 +7,8 @@
 ///                                                                           
 #include "ImageLibrary.hpp"
 
+#include <Langulus/Annies/Functional/Deepen.hpp>
+
 LANGULUS_DEFINE_MODULE(
    ImageLibrary, 9, "AssetsImages",
    "Image reading, writing, generation and modification module", "",

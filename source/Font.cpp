@@ -8,6 +8,8 @@
 #include "Font.hpp"
 #include "ImageLibrary.hpp"
 
+#include <Langulus/Annies/Functional/Deepen.hpp>
+
 
 /// Font descriptor-constructor                                               
 ///   @param producer the image producer                                      
