@@ -9,6 +9,9 @@
 #include "ImageLibrary.hpp"
 #include <Langulus/CppAPI/IO.hpp>
 
+#include <Langulus/Annies/Functional/Deepen.hpp>
+#include <Langulus/Annies/Functional/Compare.hpp>
+
 
 /// Image construction                                                        
 ///   @param producer the image producer                                      
