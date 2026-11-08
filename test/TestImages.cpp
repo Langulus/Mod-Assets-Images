@@ -21,7 +21,7 @@ SCENARIO("Loading non-existent file", "[images]") {
          );
 
          WHEN("The texture is created via abstractions") {
-            REQUIRE_THROWS(root.CreateUnit<Things::Image>("nonexistent.png"));
+            REQUIRE_THROWS(root.CreatePart<Things::Image>("nonexistent.png"));
             REQUIRE(root.GetParts().IsEmpty());
          }
          
@@ -50,7 +50,7 @@ SCENARIO("Image creation", "[images]") {
          );
        
          WHEN("The texture is created via abstractions") {
-            auto producedTexture = root.CreateUnit<Things::Image>("pattern.png");
+            auto producedTexture = root.CreatePart<Things::Image>("pattern.png");
 
             // Update once                                              
             root.Update({});
