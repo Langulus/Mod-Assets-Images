@@ -5,11 +5,11 @@
 ///                                                                           
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
-#include <Langulus/Image.hpp>
+#include <Langulus/CppAPI/Image.hpp>
 #include <Langulus/Testing.hpp>
 
 
-SCENARIO("Loading non-existent file", "[images]") {
+SCENARIO("Loading non-existent file") {
    static Allocator::State memoryState;
 
    for (int repeat = 0; repeat != 10; ++repeat) {
@@ -38,7 +38,7 @@ SCENARIO("Loading non-existent file", "[images]") {
    }
 }
 
-SCENARIO("Image creation", "[images]") {
+SCENARIO("Image creation") {
    static Allocator::State memoryState;
 
    for (int repeat = 0; repeat != 10; ++repeat) {
