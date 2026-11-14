@@ -7,13 +7,17 @@
 ///                                                                           
 #include <Langulus/CppAPI/Image.hpp>
 #include <Langulus/Testing.hpp>
+#include <Langulus/Allocator.hpp>
+
+using namespace Langulus;
+using Things::Thing;
 
 
 SCENARIO("Loading non-existent file") {
-   static Allocator::State memoryState;
+   static MemoryState memoryState;
 
-   for (int repeat = 0; repeat != 10; ++repeat) {
-      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+   GIVEN("Init and shutdown cycles") {
+      for (int repeat = 0; repeat != 10; ++repeat) {
          // Create root entity                                          
          auto root = Thing::Root<false>(
             "FileSystem",
@@ -32,17 +36,17 @@ SCENARIO("Loading non-existent file") {
          }
       #endif
 
-         // Check for memory leaks after each cycle                     
          REQUIRE(memoryState.Assert());
+         REQUIRE_FALSE(Allocator::CollectGarbage());
       }
    }
 }
 
 SCENARIO("Image creation") {
-   static Allocator::State memoryState;
+   static MemoryState memoryState;
 
-   for (int repeat = 0; repeat != 10; ++repeat) {
-      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+   GIVEN("Init and shutdown cycles") {
+      for (int repeat = 0; repeat != 10; ++repeat) {
          // Create root entity                                          
          auto root = Thing::Root<false>(
             "FileSystem",
@@ -77,8 +81,8 @@ SCENARIO("Image creation") {
          }
       #endif
 
-         // Check for memory leaks after each cycle                     
          REQUIRE(memoryState.Assert());
+         REQUIRE_FALSE(Allocator::CollectGarbage());
       }
    }
 }
